@@ -2,9 +2,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product, ProductService } from '../../services/product.service';
-import { Subscription } from 'rxjs';
+import { Subscription, combineLatest } from 'rxjs';
+import { startWith } from 'rxjs/operators';
 import { CartService } from '../../services/cart.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router'; // Asegúrate de importar 'Params'
 
 @Component({
   selector: 'app-home',
@@ -14,16 +15,13 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  allProducts: Product[] = []; // Esta es la lista que se mostrará y se filtrará
   mangas: Product[] = [];
   comics: Product[] = [];
   latestProducts: Product[] = [];
   featuredProducts: Product[] = [];
-  private productsSubscription!: Subscription;
-  private querySubscription!: Subscription;
 
-  // Una copia de todos los productos sin filtrar, para la función de búsqueda
   private originalAllProducts: Product[] = [];
+  private combinedSubscription!: Subscription;
 
   constructor(
     private productService: ProductService,
@@ -32,60 +30,53 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.productsSubscription = this.productService.products$.subscribe((products: Product[]) => {
-      this.originalAllProducts = products; // Guardar la lista original sin filtrar
-      this.allProducts = [...products]; // Mostrar todos los productos inicialmente
-      this.mangas = products.filter(p => p.type === 'manga');
-      this.comics = products.filter(p => p.type === 'comic');
+    this.combinedSubscription = combineLatest([
+      this.productService.products$.pipe(startWith([])),
+      this.route.queryParams.pipe(startWith({} as Params)) // Asegura el tipo Params
+    ]).subscribe(([products, params]) => {
+      this.originalAllProducts = products;
 
-      this.latestProducts = products.slice(-4);
-      this.featuredProducts = products.filter(p => [1, 6].includes(p.id));
-    });
+      // Acceso seguro a 'q' y fallback
+      const searchTerm = (params['q'] as string) || ''; 
 
-    this.querySubscription = this.route.queryParams.subscribe(params => {
-      const searchTerm = params['search'];
+      let filteredProducts: Product[] = [];
+
       if (searchTerm) {
-        this.searchProducts(searchTerm);
+        const lowerCaseSearchTerm = searchTerm.toLowerCase();
+        filteredProducts = this.originalAllProducts.filter(product =>
+          product.title.toLowerCase().includes(lowerCaseSearchTerm) ||
+          product.author.toLowerCase().includes(lowerCaseSearchTerm) ||
+          (product.description && product.description.toLowerCase().includes(lowerCaseSearchTerm))
+        );
       } else {
-        // Si no hay término de búsqueda, asegurar que se muestren todos los productos originales
-        this.allProducts = [...this.originalAllProducts];
+        filteredProducts = [...this.originalAllProducts];
       }
+
+      this.mangas = filteredProducts.filter(p => p.type === 'manga');
+      this.comics = filteredProducts.filter(p => p.type === 'comic');
+
+      this.latestProducts = filteredProducts.sort((a, b) => b.id! - a.id!).slice(0, 5);
+      this.featuredProducts = filteredProducts.filter(p => p.id! % 2 === 0).slice(0, 5);
     });
   }
 
   ngOnDestroy(): void {
-    if (this.productsSubscription) {
-      this.productsSubscription.unsubscribe();
-    }
-    if (this.querySubscription) {
-      this.querySubscription.unsubscribe();
+    if (this.combinedSubscription) {
+      this.combinedSubscription.unsubscribe();
     }
   }
 
   searchProducts(searchTerm: string): void {
-    if (searchTerm) {
-      const lowerCaseSearchTerm = searchTerm.toLowerCase();
-      // Filtrar a partir de la lista original de todos los productos
-      this.allProducts = this.originalAllProducts.filter(product =>
-        product.title.toLowerCase().includes(lowerCaseSearchTerm) ||
-        product.author.toLowerCase().includes(lowerCaseSearchTerm)
-      );
-    } else {
-      // Si la búsqueda está vacía, mostrar la lista original de todos los productos
-      this.allProducts = [...this.originalAllProducts];
-    }
+      console.log('searchProducts fue llamado, pero el filtrado ahora es manejado reactivamente vía queryParams.');
   }
 
   addToCart(productId: number): void {
-    // Necesitamos obtener el objeto Product completo para añadirlo al carrito.
     this.productService.getProductById(productId).subscribe(product => {
       if (product) {
         this.cartService.addToCart(product);
         console.log(`Producto ${product.title} añadido al carrito.`);
-        // Opcional: mostrar un mensaje de éxito al usuario
-        // alert(`${product.title} añadido al carrito!`);
       } else {
-        console.warn(`No se encontró el producto con ID: ${productId}`);
+        console.warn(`Producto con ID ${productId} no encontrado.`);
       }
     });
   }

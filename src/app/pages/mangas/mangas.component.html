@@ -7,7 +7,7 @@
             </ng-container>
             <div *ngFor="let manga of mangas" class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
                 <div class="card h-100 shadow-sm">
-                    <img [src]="manga.image" class="card-img-top" alt="{{ manga.title }}" style="max-height: 200px; object-fit: contain;">
+                    <img [src]="'assets/' + manga.image" class="card-img-top" alt="{{ manga.title }}" >
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title small">{{ manga.title }}</h5>
                         <p class="card-text text-muted small">{{ manga.author }}</p>

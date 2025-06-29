@@ -7,8 +7,6 @@ import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 
-declare var bootstrap: any; // ¡IMPORTANTE: Declara bootstrap para que TypeScript lo reconozca!
-
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -36,7 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.authSubscription = this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
-      this.isLoggedIn = !!user; // true si hay user, false si es undefined/null
+      this.isLoggedIn = !!user;
       this.isAdminUser = this.authService.isAdmin();
     });
 
@@ -54,28 +52,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Lógica para manejar la búsqueda
   onSearchSubmit(query: string): void {
-    if (query && query.trim() !== '') {
-      this.router.navigate(['/'], { queryParams: { q: query.trim() } });
-    } else {
-      this.router.navigate(['/catalogo']);
-    }
+  if (query && query.trim() !== '') {
+    this.router.navigate(['/'], { queryParams: { q: query.trim() } });
+  } else {
+    this.router.navigate(['/']); // ¡Esta línea es CRÍTICA!
   }
+}
 
-  // Método para abrir el modal del carrito usando el objeto global de Bootstrap
   openCartModal(): void {
     const cartModalElement = document.getElementById('cartModal');
     if (cartModalElement) {
-      // Ahora usamos 'bootstrap.Modal' directamente
-      const bsModal = new bootstrap.Modal(cartModalElement);
+      const bsModal = new (window as any).bootstrap.Modal(cartModalElement);
       bsModal.show();
     } else {
-      console.warn("Modal del carrito con ID 'cartModal' no encontrado. Asegúrate de tener el componente del modal en tu app.component.html o donde sea accesible.");
+      console.warn("Modal del carrito con ID 'cartModal' no encontrado.");
     }
   }
 
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/login']); // Redirige al login después de cerrar sesión
+    this.router.navigate(['/login']);
   }
 }
