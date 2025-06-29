@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.authSubscription = this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
-      this.isLoggedIn = !!user;
+      this.isLoggedIn = !!user; // true si hay user, false si es undefined/null
       this.isAdminUser = this.authService.isAdmin();
     });
 
@@ -62,11 +62,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Método para abrir el modal del carrito
+  // Método para abrir el modal del carrito usando el objeto global de Bootstrap
   openCartModal(): void {
     const cartModalElement = document.getElementById('cartModal');
     if (cartModalElement) {
-      // Ahora usamos 'bootstrap.Modal' directamente gracias a la declaración global
+      // Ahora usamos 'bootstrap.Modal' directamente
       const bsModal = new bootstrap.Modal(cartModalElement);
       bsModal.show();
     } else {
@@ -76,6 +76,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']); // Redirige al login después de cerrar sesión
   }
 }

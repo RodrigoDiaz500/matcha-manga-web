@@ -5,7 +5,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs/operators';
-import { CartModalComponent } from './components/cart-modal/cart-modal.component';
+import { CartModalComponent } from './components/cart-modal/cart-modal.component'; // Asegúrate de que esta ruta sea correcta
 
 @Component({
   selector: 'app-root',
@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
       // Define las rutas donde el navbar y el footer no deben ser visibles
-      const routesToHide = ['/login', '/simulated-payment', '/register'];
+      const routesToHide = ['/login', '/simulated-payment', '/register']; // Agrega o quita rutas según necesites
       this.hideNavbar = routesToHide.includes(event.urlAfterRedirects);
     });
   }

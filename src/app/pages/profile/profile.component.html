@@ -1,38 +1,110 @@
-<div class="container mt-4">
-  <div class="row justify-content-center">
-    <div class="col-md-8 col-lg-6">
-      <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
-          <h2 class="card-title mb-0">Mi Perfil de Usuario</h2>
+<main class="container my-5">
+  <div  class="row justify-content-center" style="padding-top: 5%">
+    <div class="col-md-8 col-lg-7">
+      <div class="card shadow-sm p-4">
+        <h2 class="card-title text-center mb-4">Editar Perfil</h2>
+
+        <div *ngIf="!currentUser" class="alert alert-warning text-center">
+          Cargando datos del usuario o usuario no autenticado...
         </div>
-        <div class="card-body">
-          <div *ngIf="currentUser">
-            <div class="mb-3">
-              <strong>Nombre Completo:</strong> {{ currentUser.fullName }}
-            </div>
-            <div class="mb-3">
-              <strong>Email:</strong> {{ currentUser.email }}
-            </div>
-            <div class="mb-3">
-              <strong>Rol:</strong> {{ currentUser.role | titlecase }}
-            </div>
-            <div class="mb-3">
-              <strong>Dirección:</strong> {{ currentUser.address || 'No especificada' }}
-            </div>
-            <div class="mb-3">
-              <strong>Teléfono:</strong> {{ currentUser.phone || 'No especificado' }}
-            </div>
-            <hr>
-            <div class="d-grid gap-2">
-              <button class="btn btn-info" (click)="editProfile()">Editar Perfil</button>
-              <button class="btn btn-danger" (click)="logout()">Cerrar Sesión</button>
+
+        <form *ngIf="editableUser" (ngSubmit)="onUpdateProfile()" #profileForm="ngForm" novalidate>
+          <div *ngIf="successMessage" class="alert alert-success">
+            {{ successMessage }}
+          </div>
+          <div *ngIf="errorMessage" class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
+
+          <div class="mb-3">
+            <label for="fullName" class="form-label">Nombre Completo</label>
+            <input type="text" class="form-control" id="fullName" name="fullName" [(ngModel)]="editableUser.fullName"
+              required #fullNameInput="ngModel"
+              [class.is-invalid]="fullNameInput.invalid && (fullNameInput.dirty || fullNameInput.touched)">
+            <div class="invalid-feedback" *ngIf="fullNameInput.invalid && (fullNameInput.dirty || fullNameInput.touched)">
+              El nombre completo es requerido.
             </div>
           </div>
-          <div *ngIf="!currentUser" class="text-center">
-            <p class="text-muted">No has iniciado sesión. Por favor, <a routerLink="/login">inicia sesión</a> para ver tu perfil.</p>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input type="email" class="form-control" id="email" name="email" [(ngModel)]="editableUser.email"
+              required email #emailInput="ngModel"
+              [class.is-invalid]="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
+            <div class="invalid-feedback" *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
+              <div *ngIf="emailInput.errors?.['required']">El email es requerido.</div>
+              <div *ngIf="emailInput.errors?.['email']">Por favor, introduce un email válido.</div>
+            </div>
           </div>
-        </div>
+
+          <div class="mb-3">
+            <label for="address" class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="address" name="address" [(ngModel)]="editableUser.address">
+          </div>
+
+          <div class="mb-3">
+            <label for="phone" class="form-label">Teléfono</label>
+            <input type="text" class="form-control" id="phone" name="phone" [(ngModel)]="editableUser.phone">
+          </div>
+
+
+          <hr class="my-4">
+
+          <h5 class="text-center mb-3">Cambiar Contraseña</h5>
+          <div class="d-grid gap-2 mb-3">
+            <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordMode()">
+              {{ changePasswordMode ? 'Cancelar Cambio de Contraseña' : 'Cambiar Contraseña' }}
+            </button>
+          </div>
+
+          <div *ngIf="changePasswordMode">
+            <div class="mb-3">
+              <label for="currentPassword" class="form-label">Contraseña Actual</label>
+              <input type="password" class="form-control" id="currentPassword" name="currentPassword" [(ngModel)]="currentPassword"
+                required #currentPasswordInput="ngModel"
+                [class.is-invalid]="currentPasswordInput.invalid && (currentPasswordInput.dirty || currentPasswordInput.touched)">
+              <div class="invalid-feedback" *ngIf="currentPasswordInput.invalid && (currentPasswordInput.dirty || currentPasswordInput.touched)">
+                La contraseña actual es requerida.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="newPassword" class="form-label">Nueva Contraseña</label>
+              <input type="password" class="form-control" id="newPassword" name="newPassword" [(ngModel)]="newPassword"
+                required minlength="6" #newPasswordInput="ngModel"
+                [class.is-invalid]="newPasswordInput.invalid && (newPasswordInput.dirty || newPasswordInput.touched)">
+              <div class="invalid-feedback" *ngIf="newPasswordInput.invalid && (newPasswordInput.dirty || newPasswordInput.touched)">
+                <div *ngIf="newPasswordInput.errors?.['required']">La nueva contraseña es requerida.</div>
+                <div *ngIf="newPasswordInput.errors?.['minlength']">Debe tener al menos 6 caracteres.</div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="confirmNewPassword" class="form-label">Confirmar Nueva Contraseña</label>
+              <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" [(ngModel)]="confirmNewPassword"
+                required #confirmNewPasswordInput="ngModel"
+                [class.is-invalid]="confirmNewPasswordInput.invalid && (confirmNewPasswordInput.dirty || confirmNewPasswordInput.touched || (confirmNewPassword !== newPassword && newPassword))">
+              <div class="invalid-feedback" *ngIf="confirmNewPasswordInput.invalid && (confirmNewPasswordInput.dirty || confirmNewPasswordInput.touched)">
+                La confirmación de la nueva contraseña es requerida.
+              </div>
+              <div class="invalid-feedback" *ngIf="confirmNewPassword !== newPassword && newPassword">
+                Las contraseñas no coinciden.
+              </div>
+            </div>
+          </div>
+
+          <div class="d-grid gap-2 mt-4">
+            <button type="submit" class="btn btn-primary btn-lg" [disabled]="!profileForm.form.valid">Guardar Cambios</button>
+          </div>
+
+        </form>
       </div>
     </div>
   </div>
-</div>
+</main>
+
+<style>
+  /* Puedes añadir estilos CSS aquí o en profile.component.css */
+  .card {
+    border-radius: 0.75rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  }
+</style>

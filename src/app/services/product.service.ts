@@ -38,7 +38,7 @@ export class ProductService {
 
   private initializeDefaultProducts(): void {
     this.products = [
-      { id: 1, title: 'Fullmetal Alchemist - Tomo 1', author: 'Hiromu Arakawa', price: 9.990, image: 'assets/manga1.jpg', type: 'manga' },
+      { id: 1, title: 'Fullmetal Alchemist - Tomo 1', author: 'Hiromu Arakawa', price: 9.990, image: '/assets/manga1.jpg', type: 'manga' },
         { id: 2, title: 'Shingeki no Kyojin - Tomo 1', author: 'Hajime Isayama', price: 11.990, image: 'assets/manga2.jpg', type: 'manga' },
         { id: 3, title: 'JoJos Bizarre Adventure: Stardust Crusaders - Tomo 2', author: 'Hirohiko Araki', price: 16.990, type: 'manga', image: 'assets/manga3.jpg' },
         { id: 4, title: 'Dragon Ball - Tomo 1', author: 'Akira Toriyama', price: 9.990, image: 'assets/manga4.jpg', type: 'manga' },

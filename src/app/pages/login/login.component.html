@@ -1,36 +1,36 @@
-<main class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
-            <div class="card shadow-sm p-4">
-                <h2 class="card-title text-center mb-4">Iniciar Sesión</h2>
-                <form (ngSubmit)="onLogin()" #loginForm="ngForm" novalidate>
-                    <div class="mb-3">
-                        <label for="emailOrUsername" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="emailOrUsername" name="emailOrUsername"
-                            [(ngModel)]="email" required email #emailInput="ngModel"
-                            [class.is-invalid]="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
-                        <div class="invalid-feedback" *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
-                            <div *ngIf="emailInput.errors?.['required']">El email es requerido.</div>
-                            <div *ngIf="emailInput.errors?.['email']">Por favor, introduce un email válido.</div>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="password" name="password"
-                            [(ngModel)]="password" required #passwordInput="ngModel"
-                            [class.is-invalid]="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
-                        <div class="invalid-feedback" *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
-                            El campo de contraseña es requerido.
-                        </div>
-                    </div>
-                    <div *ngIf="loginError" class="alert alert-danger mt-3">{{ loginError }}</div>
-                    <div class="d-grid gap-2 mb-3">
-                        <button type="submit" class="btn btn-primary btn-lg" [disabled]="!loginForm.form.valid">Ingresar</button>
-                    </div>
-                    <p class="text-center">¿Olvidaste tu contraseña? <a routerLink="/forgot-password">Recuperar</a></p>
-                    <p class="text-center">¿No tienes cuenta? <a routerLink="/register">Regístrate aquí</a></p>
-                </form>
-            </div>
+<div class="login-container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card p-4 shadow-lg" style="width: 100%; max-width: 400px;">
+    <h2 class="card-title text-center mb-4">Iniciar Sesión</h2>
+    <img src="../../../assets/logo.png" alt="logo"  class="d-block mx-auto mb-3 padding-logo">
+    <form (ngSubmit)="onLogin()" #loginForm="ngForm" novalidate>
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo Electrónico</label>
+        <input type="email" class="form-control" id="email" [(ngModel)]="email" name="email" required email #emailInput="ngModel"
+          [class.is-invalid]="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
+        <div class="invalid-feedback" *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
+          <div *ngIf="emailInput.errors?.['required']">El email es requerido.</div>
+          <div *ngIf="emailInput.errors?.['email']">Por favor, introduce un email válido.</div>
         </div>
-    </div>
-</main>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <input type="password" class="form-control" id="password" [(ngModel)]="password" name="password" required #passwordInput="ngModel"
+          [class.is-invalid]="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
+        <div class="invalid-feedback" *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
+          El campo de contraseña es requerido.
+        </div>
+      </div>
+      
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100 mt-3" [disabled]="!loginForm.form.valid">Ingresar</button>
+      <div class="text-center mt-3">
+        <p>¿No tienes cuenta? <a routerLink="/register">Regístrate aquí</a></p>
+        <a a routerLink="/">Catalogo</a>
+      </div>
+    </form>
+  </div>
+</div>
+

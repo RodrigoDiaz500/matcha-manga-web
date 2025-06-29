@@ -1,21 +1,17 @@
+// src/app/guards/auth.guard.ts
 import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
-import { AuthService } from '../services/auth.service';
-import { map } from 'rxjs/operators';
+import { AuthService } from '../services/auth.service'; // Asegúrate de la ruta correcta
 
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  // Usa isLoggedIn$ para verificar si el usuario está logueado
-  return authService.isLoggedIn$.pipe(
-    map((isLoggedIn: boolean) => {
-      if (isLoggedIn) {
-        return true; // Permitir acceso si está logueado
-      } else {
-        router.navigate(['/login']); // Redirigir a la página de login si no está logueado
-        return false; // Denegar acceso
-      }
-    })
-  );
+  if (authService.isLoggedIn()) {
+    return true; // El usuario está logueado, permitir acceso
+  } else {
+    // Si no está logueado, redirigir a la página de login
+    console.log('Acceso denegado: Usuario no autenticado. Redirigiendo al login.');
+    return router.createUrlTree(['/login']);
+  }
 };
