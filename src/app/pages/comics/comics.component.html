@@ -1,0 +1,21 @@
+<main class="container mt-4">
+    <section class="my-5">
+        <h2 class="text-center mb-4">Nuestros Comics</h2>
+        <div class="row">
+            <ng-container *ngIf="comics.length === 0">
+                <div class="col-12 text-center py-3"><p class="lead">No se encontraron comics.</p></div>
+            </ng-container>
+            <div *ngFor="let comic of comics" class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img [src]="comic.image" class="card-img-top" alt="{{ comic.title }}" style="max-height: 200px; object-fit: contain;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title small">{{ comic.title }}</h5>
+                        <p class="card-text text-muted small">{{ comic.author }}</p>
+                        <p class="card-text fw-bold small">${{ comic.price.toFixed(3) }}</p>
+                        <button class="btn btn-primary btn-sm mt-auto" (click)="addToCart(comic.id)">Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

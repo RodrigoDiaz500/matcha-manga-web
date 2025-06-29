@@ -1,0 +1,61 @@
+<div class="modal-header">
+    <h5 class="modal-title">{{ product.id ? 'Editar Producto' : 'Agregar Nuevo Producto' }}</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<form (ngSubmit)="onSubmit()" #productForm="ngForm" novalidate>
+    <div class="modal-body">
+        <div class="mb-3">
+            <label for="productTitle" class="form-label">Título</label>
+            <input type="text" class="form-control" id="productTitle" name="title"
+                [(ngModel)]="product.title" required #titleInput="ngModel"
+                [class.is-invalid]="titleInput.invalid && (titleInput.dirty || titleInput.touched)">
+            <div class="invalid-feedback" *ngIf="titleInput.invalid && (titleInput.dirty || titleInput.touched)">
+                El título es requerido.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="productAuthor" class="form-label">Autor</label>
+            <input type="text" class="form-control" id="productAuthor" name="author"
+                [(ngModel)]="product.author" required #authorInput="ngModel"
+                [class.is-invalid]="authorInput.invalid && (authorInput.dirty || authorInput.touched)">
+            <div class="invalid-feedback" *ngIf="authorInput.invalid && (authorInput.dirty || authorInput.touched)">
+                El autor es requerido.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="productPrice" class="form-label">Precio</label>
+            <input type="number" class="form-control" id="productPrice" name="price"
+                [(ngModel)]="product.price" required min="0.01" step="0.01" #priceInput="ngModel"
+                [class.is-invalid]="priceInput.invalid && (priceInput.dirty || priceInput.touched)">
+            <div class="invalid-feedback" *ngIf="priceInput.invalid && (priceInput.dirty || priceInput.touched)">
+                El precio es requerido y debe ser un número positivo.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="productImage" class="form-label">Ruta de Imagen (Ej: manga1.jpg)</label>
+            <input type="text" class="form-control" id="productImage" name="image"
+                [(ngModel)]="product.image" required #imageInput="ngModel"
+                [class.is-invalid]="imageInput.invalid && (imageInput.dirty || imageInput.touched)">
+            <div class="invalid-feedback" *ngIf="imageInput.invalid && (imageInput.dirty || imageInput.touched)">
+                La ruta de la imagen es requerida.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="productType" class="form-label">Tipo</label>
+            <select class="form-select" id="productType" name="type"
+                [(ngModel)]="product.type" required #typeInput="ngModel"
+                [class.is-invalid]="typeInput.invalid && (typeInput.dirty || typeInput.touched)">
+                <option value="" disabled>Seleccione un tipo</option>
+                <option value="manga">Manga</option>
+                <option value="comic">Cómic</option>
+            </select>
+            <div class="invalid-feedback" *ngIf="typeInput.invalid && (typeInput.dirty || typeInput.touched)">
+                El tipo es requerido.
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('Cancel click')">Cancelar</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!productForm.form.valid">Guardar</button>
+    </div>
+</form>

@@ -1,0 +1,764 @@
+
+/* Paleta de Colores y Variables Personalizadas                               */
+:root {
+    /* Verdes Matcha */
+    --matcha-manga-green: #74A12E; /* Verde matcha principal */
+    --matcha-manga-dark-green: #5A7A22; /* Tono más oscuro para hover/activos */
+    --matcha-manga-light-green: #90EE90; /* Un verde más claro para detalles o contrastes suaves */
+
+    /* Rojos/Complementarios (originalmente --bs-warning) */
+    --matcha-manga-red: #DB4B5C; /* El color de fondo que se usa en el navbar */
+    --matcha-manga-dark-red: #B53F4E; /* Tono más oscuro para hover */
+    --matcha-manga-salmon: #ecb642;  
+    --matcha-manga-dark-salmon: #e68911;
+
+    --color-text-dark: #212529; 
+    --color-text-light: #F8F9FA; 
+    --color-background-light: #F8F9FA; 
+    --color-background-dark: #343A40; 
+    --color-white: #FFFFFF; 
+    --color-gray-light: #F0F0F0; 
+    --color-gray-medium: #dee2e6; 
+
+    /* Bootstrap Overrides (para mantener la coherencia con tu paleta) */
+    --bs-primary: var(--matcha-manga-green); /* Botones primarios de Bootstrap */
+    --bs-warning: var(--matcha-manga-salmon); 
+    --bs-danger: var(--matcha-manga-red); /* Color de eliminación */
+    --bs-success: var(--matcha-manga-green); /* Color de éxito */
+}
+/* Globales  */
+
+html {
+    scroll-behavior: smooth; /* Desplazamiento suave para anclas */
+}
+
+body {
+    font-family: 'Arial', sans-serif; /* Fuente base para todo el sitio */
+    background-color: var(--color-background-light); /* Color de fondo claro para la página */
+    color: var(--color-text-dark); /* Color de texto base */
+    line-height: 1.6;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el footer siempre esté al final */
+}
+
+/* Estilos para encabezados principales */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-text-dark); /* Color oscuro para los títulos */
+    margin-bottom: 0.75em;
+    font-weight: 700;
+}
+
+/* Estilos para los títulos de sección (h2) */
+h2 {
+    color: var(--color-text-dark);
+    font-weight: 700;
+    margin-bottom: 2rem;
+    position: relative;
+    text-align: center; /* Centra el título */
+}
+
+h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background-color: var(--matcha-manga-green);
+    margin: 0.5rem auto 0 auto; /* Centra la línea debajo del título */
+    border-radius: 2px;
+}
+
+/* Ajuste general para imágenes responsivas */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block; /* Elimina espacio extra debajo de las imágenes */
+}
+
+/* Separadores horizontales */
+hr {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Estilos para enlaces generales */
+a {
+    color: var(--matcha-manga-green);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--matcha-manga-dark-green);
+    text-decoration: underline;
+}
+
+
+/* 2. Contenido Principal  */
+
+main {
+    flex-grow: 1; /* Ocupa el espacio restante para empujar el footer hacia abajo */
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+
+/* 3. Navbar y Offcanvas  */
+
+
+/* Navbar General (aplicará a ambas si no se sobreescribe) */
+.navbar {
+    background-color: var(--matcha-manga-red);
+    padding: 0.5rem 1rem;
+    border-bottom: 3px solid var(--matcha-manga-green);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sutil sombra para dar profundidad */
+}
+
+/* Logo de la Navbar */
+.navbar-brand img {
+    max-width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    background-color: var(--color-white);
+    border: 2px solid var(--matcha-manga-green);
+    padding: 0;
+    transition: transform 0.3s ease-in-out;
+    
+}
+
+.navbar-brand img:hover {
+    transform: rotate(5deg) scale(1.1);
+}
+
+/* Estilo para todos los botones de la navbar (incluyendo el buscador y el dropdown toggle) */
+.nav-button-style {
+    color: var(--color-white) !important;
+    border: 1px solid var(--matcha-manga-light-green);
+    background-color: transparent !important;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.5rem;
+    margin: 0 0.4rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.nav-button-style:hover,
+.nav-button-style:focus {
+    background-color: var(--matcha-manga-light-green) !important;
+    color: var(--color-text-dark) !important;
+    border-color: var(--matcha-manga-light-green) !important;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.nav-button-style .fas {
+    margin-right: 0.5rem;
+}
+
+.nav-button-style .fas:only-child {
+    margin-right: 0;
+}
+
+/* Estilos para el campo de búsqueda y botón en la Navbar */
+.navbar #searchFormDesktop .form-control,
+.navbar #searchFormMobile .form-control { /* Aplica a ambos buscadores */
+    border-color: var(--matcha-manga-light-green);
+}
+
+.navbar #searchFormDesktop .form-control:focus,
+.navbar #searchFormMobile .form-control:focus { /* Aplica a ambos buscadores */
+    border-color: var(--matcha-manga-green);
+    box-shadow: 0 0 0 0.25rem rgba(116, 161, 46, 0.25);
+}
+
+/* Estilo para los elementos del dropdown de usuario (Desktop) */
+.navbar .dropdown-menu {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-light);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 0.5rem 0;
+}
+
+.navbar .dropdown-item {
+    color: var(--color-text-dark);
+    padding: 0.75rem 1.5rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus {
+    background-color: var(--matcha-manga-light-green);
+    color: var(--color-text-dark);
+}
+
+.navbar .dropdown-item-text {
+    color: var(--color-text-dark);
+    padding: 0.75rem 1.5rem;
+    font-weight: bold;
+}
+
+.navbar .dropdown-divider {
+    border-color: var(--color-gray-light);
+    margin: 0.5rem 0;
+}
+
+/* Estilos para el toggler de la navbar en móvil */
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.5); /* Borde blanco translúcido */
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    margin-right: 15px;
+    margin-bottom: 7px;
+}
+
+.btn btn-link nav-button-style p-0{
+    margin-bottom: 5px;
+    margin-right: auto;
+}
+
+/* Estilos para los Offcanvas */
+.offcanvas {
+    background-color: var(--color-background-light); /* Fondo claro para los offcanvas */
+}
+
+.offcanvas-header {
+    background-color: var(--matcha-manga-red); /* Fondo oscuro para el encabezado */
+    color: var(--color-white); /* Texto blanco en el encabezado */
+    border-bottom: 1px solid var(--matcha-manga-green);
+}
+
+.offcanvas-title {
+    color: var(--color-white);
+}
+
+.offcanvas-header .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%); /* Hace que el botón de cerrar sea blanco */
+    opacity: 0.8;
+}
+
+.offcanvas-header .btn-close:hover {
+    opacity: 1;
+}
+
+.offcanvas-body {
+    background-color: var(--color-background-light);
+}
+
+.offcanvas .nav-link {
+    color: var(--color-text-dark); /* Color del texto de los enlaces del offcanvas */
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--color-gray-light); /* Separador entre elementos */
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.offcanvas .nav-link:hover {
+    background-color: var(--matcha-manga-light-green);
+    color: var(--color-text-dark);
+}
+
+.offcanvas .nav-link .fas {
+    margin-right: 0.5rem;
+}
+
+/* Estilo para el botón de Carrito dentro del offcanvas de usuario */
+#offcanvasUser #cartLinkOffcanvas {
+    background-color: var(--matcha-manga-green) !important;
+    color: var(--color-white) !important;
+    border-color: var(--matcha-manga-green) !important;
+    margin-top: 1rem;
+    width: 100%; /* Asegura que ocupe todo el ancho */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#offcanvasUser #cartLinkOffcanvas:hover {
+    background-color: var(--matcha-manga-dark-green) !important;
+    border-color: var(--matcha-manga-dark-green) !important;
+    transform: translateY(-2px);
+}
+
+
+/* 4. Cards de Productos  */
+
+.card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background-color: var(--color-white);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--color-gray-medium); /* Borde suave */
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-top {
+    width: 100%;
+    height: 220px;
+    object-fit: contain; /* Ajusta la imagen dentro del contenedor */
+    background-color: var(--color-background-light);
+    padding: 15px;
+    border-bottom: 1px solid var(--color-gray-light);
+}
+
+.card-body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    font-size: 1.15rem;
+    font-weight: bold;
+    min-height: 3em; /* Para consistencia de altura de títulos */
+    line-height: 1.4em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limita a 2 líneas */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    color: var(--color-text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.card-text.text-muted.small {
+    font-size: 0.9rem;
+    min-height: 1.5em; /* Para consistencia de altura de autor/tipo */
+    color: var(--color-text-dark) !important;
+    opacity: 0.8;
+    margin-bottom: 0.5rem;
+}
+
+.card-text.fw-bold.small {
+    font-size: 1.2rem;
+    color: var(--matcha-manga-green);
+    margin-top: auto; /* Empuja el precio y botón al final */
+    margin-bottom: 1rem;
+}
+
+.shadow-lg {
+    margin-bottom: 100px; 
+}
+
+
+/* 5. Botones (General y Específicos)   */
+
+
+/* Botones de Bootstrap en general (para asegurar consistencia si se usas en otros lugares) */
+.btn {
+    border-radius: 0.3rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* Botón "Añadir" en las Cards (usando .btn-primary) */
+.btn-primary {
+    background-color: var(--matcha-manga-green);
+    border-color: var(--matcha-manga-green);
+    color: var(--color-white);
+    font-weight: 600;
+    border-radius: 0.5rem;
+    padding: 0.6rem 1rem;
+    transition: all 0.3s ease;
+    width: 100%; /* Asegura que ocupe todo el ancho de la tarjeta */
+}
+
+.btn-primary:hover {
+    background-color: var(--matcha-manga-dark-green);
+    border-color: var(--matcha-manga-dark-green);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para botones de Admin (Editar, Eliminar) */
+.btn-warning {
+    background-color: var(--matcha-manga-salmon);
+    border-color: var(--matcha-manga-salmon);
+    color: var(--color-text-light); /* Texto claro sobre amarillo */
+}
+
+.btn-warning:hover {
+    background-color: var(--matcha-manga-dark-salmon);
+    border-color: var(--matcha-manga-dark-salmon);
+    color: var(--color-white);
+}
+
+.btn-danger {
+    background-color: var(--matcha-manga-red);
+    border-color: var(--matcha-manga-red);
+    color: var(--color-white);
+}
+
+.btn-danger:hover {
+    background-color: var(--matcha-manga-dark-red);
+    border-color: var(--matcha-manga-dark-red);
+}
+
+.btn-success {
+    background-color: var(--matcha-manga-green);
+    border-color: var(--matcha-manga-green);
+    color: var(--color-white);
+    /* width: 100%; */ /* */
+}
+
+.btn-success:hover {
+    background-color: var(--matcha-manga-dark-green);
+    border-color: var(--matcha-manga-dark-green);
+}
+
+/* 6. Formularios y Modales  */
+
+.form-control:focus {
+    border-color: var(--matcha-manga-green);
+    box-shadow: 0 0 0 0.25rem rgba(116, 161, 46, 0.25);
+}
+
+.modal-content {
+    border-radius: 0.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    background-color: var(--matcha-manga-red); /* Usando el rojo de tu paleta */
+    color: var(--color-white);
+    border-bottom: none;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+.modal-header .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%); 
+    opacity: 0.8;
+}
+
+.modal-header .btn-close:hover {
+    opacity: 1;
+}
+
+.modal-footer {
+    border-top: 1px solid var(--color-gray-light);
+    background-color: var(--color-background-light); 
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+#cartItems .list-group-item {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+#cartItems .list-group-item:last-child {
+    border-bottom: none;
+}
+
+.remove-from-cart-btn {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+
+/* 7. Tablas (Específico para Admin Dashboard)  */
+
+.table {
+    border-radius: 0.5rem;
+    overflow: hidden; /* Asegura que los bordes redondeados se apliquen a la tabla */
+}
+
+.table thead {
+    background-color: var(--matcha-manga-green);
+    color: var(--color-white);
+}
+
+.table th,
+.table td {
+    vertical-align: middle; /* Centra el contenido verticalmente */
+}
+
+#adminProductsTableBody img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px; /* Pequeño radio en las esquinas de las imágenes de la tabla */
+    border: 1px solid var(--color-gray-light);
+}
+
+/* Responsividad para tablas */
+.table-responsive {
+    margin-top: 1rem;
+}
+
+
+
+/* 8. Footer  */
+
+footer {
+    background-color: var(--color-background-dark); /* Asegura el fondo oscuro */
+    color: var(--color-text-light); /* Asegura el texto blanco */
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-top: 3px solid var(--matcha-manga-green);
+}
+
+footer a {
+    color: var(--color-text-light); /* Color de enlace predeterminado en el footer */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--matcha-manga-light-green);
+}
+
+footer .text-warning {
+    color: var(--matcha-manga-light-green) !important; /* Asegura que los títulos sean verdes claros */
+}
+
+footer p {
+    margin-bottom: 0.5rem;
+}
+
+footer .fas {
+    margin-right: 0.75rem;
+}
+
+footer .list-inline-item .fab {
+    transition: transform 0.3s ease-in-out, color 0.3s ease;
+}
+
+footer .list-inline-item .fab:hover {
+    transform: scale(1.3);
+    color: var(--matcha-manga-light-green);
+}
+
+/* Alineaciones específicas  */
+.mb-0 {
+    text-align: end;
+}
+
+.mb-1 {
+    text-align: center;
+}
+
+.mb-3 {
+    text-align: center;
+}
+
+
+/* 9. Media Queries  */
+
+
+/* Pequeños dispositivos (576px y más) */
+@media (min-width: 576px) {
+
+}
+
+/* Dispositivos medianos (ej. tablets, 768px y más) */
+@media (min-width: 768px) {
+    .navbar-brand img {
+        height: 70px; /* Logo un poco más grande en tablets */
+    }
+    .card-img-top {
+        height: 250px; /* Altura de imagen de producto un poco más grande */
+    }
+    
+}
+
+/* Dispositivos grandes (ej. desktops, 992px y más) */
+@media (min-width: 992px) {
+    /* Oculta la navbar móvil en desktop */
+    .navbar.d-lg-none {
+        display: none !important;
+    }
+
+    /* Restaura la visibilidad y el layout de la navbar de escritorio */
+    .navbar-expand-lg.d-lg-flex {
+        display: flex !important; /* Asegura que la navbar de desktop se muestre como flex */
+    }
+
+    .navbar .container-fluid {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
+
+    .navbar-brand {
+        margin-right: 0 !important;
+        order: 0;
+    }
+
+    /* El contenedor d-flex que contiene búsqueda, carrito, usuario */
+    .navbar .d-flex.flex-row {
+        flex-direction: row !important;
+        align-items: center !important;
+        width: auto !important;
+        margin-top: 0 !important;
+    }
+
+    
+
+    /* El navbar-collapse contiene los enlaces centrales */
+    #navbarNavDesktop {
+        display: flex !important;
+        flex-grow: 1;
+        justify-content: center;
+        order: 1;
+        margin-left: 0;
+        margin-right: 0;
+        background-color: transparent;
+        padding-top: 0;
+        padding-bottom: 0;
+        border-radius: 0;
+        margin-top: 0;
+    }
+
+    /* Ajustes para el buscador en desktop */
+    #searchFormDesktop {
+        margin-bottom: 0 !important;
+        margin-right: 1rem;
+        width: auto !important;
+    }
+
+    /* Para que los botones se separen un poco más en desktop */
+    .navbar-nav .nav-item {
+        margin-left: 0.3rem;
+        margin-right: 0.3rem;
+    }
+
+    /* Ajuste para el dropdown de usuario en desktop */
+    .navbar .nav-item.dropdown {
+        margin-left: 0.5rem;
+    }
+
+    /* El dropdown menu debe ser absoluto en desktop */
+    .navbar .dropdown-menu {
+        position: absolute;
+        width: auto;
+        left: auto;
+        right: 0;
+        float: none;
+        transform: none;
+        border-top: 1px solid var(--color-gray-light);
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    
+}
+
+/* Media Query para móvil (hasta 991.98px) */
+@media (max-width: 991.98px) {
+    /* Oculta la navbar de escritorio en mobile */
+    .navbar-expand-lg.d-lg-flex {
+        display: none !important;
+    }
+
+    /* Ajustes específicos para la navbar móvil */
+    .navbar.d-lg-none {
+        padding: 0.5rem 0.75rem; /* Reduce un poco el padding horizontal general de la navbar */
+        background-color: var(--matcha-manga-red);
+        border-bottom: 3px solid var(--matcha-manga-green);
+        /* Alinea los items en una fila y distribuye espacio */
+        display: flex; /* Asegura flexbox para el container-fluid */
+        align-items: center; /* Centra verticalmente */
+        justify-content: space-between; /* Distribuye los items */
+    }
+
+    /* Buscador móvil */
+    #searchFormMobile {
+        flex-grow: 1; /* Permite que el formulario de búsqueda ocupe el espacio disponible */
+        margin-left: 0.25rem; /* Reduce un poco el margen a los lados del buscador */
+        margin-right: 0.25rem;
+        display: flex; /* Asegura flexbox dentro del formulario para input y botón */
+    }
+
+    #searchFormMobile .form-control {
+        flex-grow: 1; /* El input crecerá para ocupar el espacio */
+        min-width: 0; /* Permite que el input se encoja si es necesario */
+        padding: 0.375rem 0.75rem; /* Reduce el padding del input de búsqueda */
+        font-size: 0.875rem; /* Reduce un poco el tamaño de la fuente del placeholder */
+        height: 38px; /* Fija una altura si es necesario para consistencia */
+    }
+
+    /* Oculta el texto "Buscar" y muestra solo el ícono para el botón de búsqueda en móvil */
+    #searchFormMobile .btn {
+        padding: 0.375rem 0.6rem; /* Ajusta el padding del botón de búsqueda */
+        font-size: 1.1rem; /* Asegura que el ícono siga viéndose bien */
+        height: 38px; /* Misma altura que el input para alineación */
+        display: flex; /* Asegura que el ícono esté centrado si hay espacio */
+        align-items: center;
+        justify-content: center;
+    }
+
+    #searchFormMobile .btn span { /* Oculta el texto "Buscar" en el botón de búsqueda */
+        display: none;
+    }
+    #searchFormMobile .btn .fas { /* Asegura que el ícono sea visible */
+        margin-right: 0; /* Elimina margen extra del ícono si estaba */
+    }
+
+    /* Botones de toggler y usuario en la navbar móvil */
+    .navbar.d-lg-none .navbar-toggler,
+    .navbar.d-lg-none .btn-link {
+        font-size: 1.3rem;
+        color: var(--color-white) !important;
+        border: none;
+        height: 38px; /* Asegura la misma altura que el campo de búsqueda y botón */
+        display: flex; /* Habilita flexbox para centrar el ícono */
+        align-items: center; /* Centra verticalmente el ícono */
+        justify-content: center; /* Centra horizontalmente el ícono */
+        padding: 0; /* Remueve el padding ya que la altura es fija y centramos con flex */
+    }
+
+    /* Estilo del botón de usuario en la navbar móvil  */
+    .navbar.d-lg-none .btn-link.nav-button-style {
+        border: none !important;
+        background-color: transparent !important;
+    }
+    .navbar.d-lg-none .btn-link.nav-button-style:hover {
+        transform: none;
+        box-shadow: none;
+        color: var(--matcha-manga-light-green) !important;
+    }
+
+    .mb-0 {
+    text-align: center;
+}
+
+    /* para pantallas muy muy pequeñas (como iPhone SE verticalmente) */
+    @media (max-width: 400px) {
+        .navbar.d-lg-none {
+            padding: 0.4rem 0.5rem; /* Más reducción en el padding general */
+        }
+        #searchFormMobile {
+            margin-left: 0.15rem;
+            margin-right: 0.15rem;
+        }
+        #searchFormMobile .form-control {
+            font-size: 0.8rem; /* Fuente un poco más pequeña */
+            height: 36px;
+        }
+        #searchFormMobile .btn {
+            font-size: 1rem;
+            height: 36px;
+        }
+        .navbar.d-lg-none .navbar-toggler,
+        .navbar.d-lg-none .btn-link {
+            font-size: 1.2rem;
+            height: 36px; /* Ajuste de altura para pantallas muy pequeñas */
+        }
+        
+    }
+}

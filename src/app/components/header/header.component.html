@@ -1,0 +1,121 @@
+<header>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" style="padding-right: 1%;" routerLink="/">
+        <img src="../../../assets/logo.png" alt="logo" class="d-inline-block align-text-top padding-logo">
+      </a>
+
+      <button class="navbar-toggler" type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasNavbar"
+        aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <form class="d-flex w-100 d-lg-none my-0 order-3" role="search" (submit)="onSearchSubmit(searchInputMobileHeader.value)">
+        <input #searchInputMobileHeader class="form-control mx-auto flex-grow-1" type="search" placeholder="Buscar..." aria-label="Search" style="max-width: 300px;">
+        <button class="btn btn-outline-light ms-2" type="submit">Buscar</button>
+      </form>
+
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link btn btn-primary" routerLink="/mangas" routerLinkActive="active">Mangas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn btn-primary" routerLink="/comics" routerLinkActive="active">Cómics</a>
+          </li>
+        </ul>
+
+        <form class="d-flex ms-auto me-3 d-none d-lg-flex" role="search" (submit)="onSearchSubmit(searchInputDesktop.value)">
+          <input #searchInputDesktop class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Search" style="width: 300px;">
+          <button class="btn btn-outline-light" type="submit">Buscar</button>
+        </form>
+
+        <div class="d-flex align-items-center">
+          <button class="btn btn-primary button-style me-2" (click)="openCartModal()" style="cursor: pointer;">
+            <i class="fas fa-shopping-cart"></i> Carrito (<span id="cartCountDesktop">{{ cartItemCount }}</span>) </button>
+
+          <ng-container *ngIf="isLoggedIn; else authButtons">
+            <div class="dropdown">
+              <a class="nav-link dropdown-toggle text-light" href="#" role="button" id="dropdownUserMenu"
+                data-bs-toggle="dropdown" aria-expanded="false" style="padding: 0.5rem 0.75rem;">
+                <i class="fas fa-user fa-lg"></i> <span *ngIf="isLoggedIn" class="d-none d-md-inline-block">{{ currentUser?.fullName }}</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUserMenu">
+                <li><span class="dropdown-item-text">Bienvenido, <strong>{{ currentUser?.fullName }}</strong></span>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" routerLink="/perfil" style="cursor: pointer;">Mi Perfil</a></li>
+                <li *ngIf="isAdminUser"><a class="dropdown-item" routerLink="/admin-dashboard" style="cursor: pointer;">Admin
+                    Dashboard</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" (click)="logout()" style="cursor: pointer;">Cerrar Sesión</a></li>
+              </ul>
+            </div>
+          </ng-container>
+          <ng-template #authButtons>
+            <div class="dropdown">
+              <a class="nav-link dropdown-toggle text-light" href="#" role="button" id="dropdownUserMenuNotLogged"
+                data-bs-toggle="dropdown" aria-expanded="false" style="padding: 0.5rem 0.75rem;">
+                <i class="fas fa-user fa-lg"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUserMenuNotLogged">
+                <li><a class="dropdown-item" routerLink="/login">Login</a></li>
+                <li><a class="dropdown-item" routerLink="/register">Registro</a></li>
+              </ul>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú de Navegación</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/" data-bs-dismiss="offcanvas">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/mangas" data-bs-dismiss="offcanvas">Mangas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/comics" data-bs-dismiss="offcanvas">Cómics</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/catalogo" data-bs-dismiss="offcanvas">Catálogo</a>
+        </li>
+      </ul>
+      <hr>
+      <div class="d-grid gap-2">
+        <ng-container *ngIf="isLoggedIn; else authButtonsOffcanvas">
+          <span class="nav-link text-center text-muted">Bienvenido, <strong>{{ currentUser?.fullName }}</strong></span>
+          <a class="btn btn-outline-primary" routerLink="/perfil" data-bs-dismiss="offcanvas"><i
+              class="fas fa-user me-2"></i>Mi Perfil</a>
+          <a *ngIf="isAdminUser" class="btn btn-outline-primary" routerLink="/admin-dashboard" data-bs-dismiss="offcanvas"><i
+              class="fas fa-tachometer-alt me-2"></i>Admin Dashboard</a>
+          <button class="btn btn-danger" (click)="logout()" data-bs-dismiss="offcanvas"
+            style="cursor: pointer;">
+            <i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión
+          </button>
+        </ng-container>
+        <ng-template #authButtonsOffcanvas>
+          <a class="btn btn-outline-primary" routerLink="/login" data-bs-dismiss="offcanvas"><i
+              class="fas fa-sign-in-alt me-2"></i>Login</a>
+          <a class="btn btn-primary" routerLink="/register" data-bs-dismiss="offcanvas"><i
+              class="fas fa-user-plus me-2"></i>Registro</a>
+        </ng-template>
+
+        <button class="btn btn-success button-style w-100" (click)="openCartModal()" data-bs-dismiss="offcanvas"
+          style="cursor: pointer;">
+          <i class="fas fa-shopping-cart me-2"></i> Carrito (<span id="cartCountOffcanvas">{{ cartItemCount }}</span>) </button>
+      </div>
+    </div>
+  </div>
+</header>

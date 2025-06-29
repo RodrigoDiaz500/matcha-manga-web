@@ -1,0 +1,48 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow-lg p-4" style="max-width: 500px; width: 100%;">
+        <div class="card-body">
+            <img src="assets/logo.png" alt="Logo" class="img-fluid mx-auto d-block mb-4" style="max-width: 150px;">
+            <h2 class="card-title text-center mb-4">Crear una Cuenta</h2>
+            <form id="registerForm" novalidate (ngSubmit)="onSubmit(registerForm)" #registerForm="ngForm">
+                <div class="mb-3">
+                    <label for="fullName" class="form-label">Nombre Completo</label>
+                    <input type="text" class="form-control" id="fullName" name="fullName" [(ngModel)]="fullName" required #fullNameField="ngModel">
+                    <div class="invalid-feedback" *ngIf="fullNameField.invalid && (fullNameField.dirty || fullNameField.touched)">
+                        Por favor, ingresa tu nombre completo.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" [(ngModel)]="email" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" #emailField="ngModel">
+                    <div class="invalid-feedback" *ngIf="emailField.invalid && (emailField.dirty || emailField.touched)">
+                        <span *ngIf="emailField.errors?.['required']">Por favor, ingresa un email.</span>
+                        <span *ngIf="emailField.errors?.['pattern']">Por favor, ingresa un email válido.</span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" name="password" [(ngModel)]="passwordA" required #passwordField="ngModel"
+                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$">
+                    <div class="invalid-feedback" id="passwordFeedback" *ngIf="passwordField.invalid && (passwordField.dirty || passwordField.touched)">
+                        La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un
+                        número y un carácter especial (!&#64;#$%^&amp;*()_+).
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPasswordA" required #confirmPasswordField="ngModel">
+                    <div class="invalid-feedback" id="confirmPasswordFeedback" *ngIf="confirmPasswordField.invalid && (confirmPasswordField.dirty || confirmPasswordField.touched)">
+                        Las contraseñas no coinciden.
+                    </div>
+                    <div class="invalid-feedback" *ngIf="passwordField.valid && confirmPasswordField.valid && passwordA !== confirmPasswordA && (confirmPasswordField.dirty || confirmPasswordField.touched)">
+                        Las contraseñas no coinciden.
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success w-100 mb-3" [disabled]="!registerForm.valid || passwordA !== confirmPasswordA">Registrarse</button>
+                <div class="text-center">
+                    <p class="mb-1">¿Ya tienes cuenta? <a routerLink="/login" class="text-decoration-none">Inicia Sesión</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

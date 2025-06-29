@@ -1,0 +1,38 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h2 class="card-title mb-0">Mi Perfil de Usuario</h2>
+        </div>
+        <div class="card-body">
+          <div *ngIf="currentUser">
+            <div class="mb-3">
+              <strong>Nombre Completo:</strong> {{ currentUser.fullName }}
+            </div>
+            <div class="mb-3">
+              <strong>Email:</strong> {{ currentUser.email }}
+            </div>
+            <div class="mb-3">
+              <strong>Rol:</strong> {{ currentUser.role | titlecase }}
+            </div>
+            <div class="mb-3">
+              <strong>Dirección:</strong> {{ currentUser.address || 'No especificada' }}
+            </div>
+            <div class="mb-3">
+              <strong>Teléfono:</strong> {{ currentUser.phone || 'No especificado' }}
+            </div>
+            <hr>
+            <div class="d-grid gap-2">
+              <button class="btn btn-info" (click)="editProfile()">Editar Perfil</button>
+              <button class="btn btn-danger" (click)="logout()">Cerrar Sesión</button>
+            </div>
+          </div>
+          <div *ngIf="!currentUser" class="text-center">
+            <p class="text-muted">No has iniciado sesión. Por favor, <a routerLink="/login">inicia sesión</a> para ver tu perfil.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
