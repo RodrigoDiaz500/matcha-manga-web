@@ -1,4 +1,3 @@
-// src/app/pages/mangas/mangas.component.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product, ProductService } from '../../services/product.service';
@@ -18,7 +17,7 @@ export class MangasComponent implements OnInit, OnDestroy {
 
   constructor(
     private productService: ProductService,
-    private cartService: CartService // Asegúrate de que está inyectado
+    private cartService: CartService 
   ) { }
 
   ngOnInit(): void {
@@ -36,9 +35,8 @@ export class MangasComponent implements OnInit, OnDestroy {
   addToCart(productId: number): void {
     this.productService.getProductById(productId).subscribe(product => {
       if (product) {
-        this.cartService.addToCart(product); // <-- ¡¡ESTA ES LA CORRECCIÓN CLAVE!!
+        this.cartService.addToCart(product); 
         console.log(`Producto ${product.title} (ID: ${product.id}) añadido al carrito.`);
-        // Opcional: Podrías añadir una pequeña notificación al usuario aquí.
       } else {
         console.warn(`No se encontró el producto con ID: ${productId}`);
       }

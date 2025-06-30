@@ -56,7 +56,7 @@ h2 {
     font-weight: 700;
     margin-bottom: 2rem;
     position: relative;
-    text-align: center; /* Centra el título */
+    text-align: center; 
 }
 
 h2::after {
@@ -73,7 +73,7 @@ h2::after {
 img {
     max-width: 100%;
     height: auto;
-    display: block; /* Elimina espacio extra debajo de las imágenes */
+    display: block; 
 }
 
 /* Separadores horizontales */
@@ -99,7 +99,7 @@ a:hover {
 /* 2. Contenido Principal  */
 
 main {
-    flex-grow: 1; /* Ocupa el espacio restante para empujar el footer hacia abajo */
+    flex-grow: 1; 
     padding-top: 2rem;
     padding-bottom: 2rem;
 }
@@ -113,7 +113,7 @@ main {
     background-color: var(--matcha-manga-red);
     padding: 0.5rem 1rem;
     border-bottom: 3px solid var(--matcha-manga-green);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sutil sombra para dar profundidad */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
 }
 
 /* Logo de la Navbar */
@@ -168,12 +168,12 @@ main {
 
 /* Estilos para el campo de búsqueda y botón en la Navbar */
 .navbar #searchFormDesktop .form-control,
-.navbar #searchFormMobile .form-control { /* Aplica a ambos buscadores */
+.navbar #searchFormMobile .form-control { 
     border-color: var(--matcha-manga-light-green);
 }
 
 .navbar #searchFormDesktop .form-control:focus,
-.navbar #searchFormMobile .form-control:focus { /* Aplica a ambos buscadores */
+.navbar #searchFormMobile .form-control:focus { 
     border-color: var(--matcha-manga-green);
     box-shadow: 0 0 0 0.25rem rgba(116, 161, 46, 0.25);
 }
@@ -212,7 +212,7 @@ main {
 
 /* Estilos para el toggler de la navbar en móvil */
 .navbar-toggler {
-    border-color: rgba(255, 255, 255, 0.5); /* Borde blanco translúcido */
+    border-color: rgba(255, 255, 255, 0.5); 
 }
 
 .navbar-toggler-icon {
@@ -228,12 +228,12 @@ main {
 
 /* Estilos para los Offcanvas */
 .offcanvas {
-    background-color: var(--color-background-light); /* Fondo claro para los offcanvas */
+    background-color: var(--color-background-light); /
 }
 
 .offcanvas-header {
-    background-color: var(--matcha-manga-red); /* Fondo oscuro para el encabezado */
-    color: var(--color-white); /* Texto blanco en el encabezado */
+    background-color: var(--matcha-manga-red); 
+    color: var(--color-white); 
     border-bottom: 1px solid var(--matcha-manga-green);
 }
 
@@ -242,7 +242,7 @@ main {
 }
 
 .offcanvas-header .btn-close {
-    filter: invert(1) grayscale(100%) brightness(200%); /* Hace que el botón de cerrar sea blanco */
+    filter: invert(1) grayscale(100%) brightness(200%); 
     opacity: 0.8;
 }
 
@@ -255,9 +255,9 @@ main {
 }
 
 .offcanvas .nav-link {
-    color: var(--color-text-dark); /* Color del texto de los enlaces del offcanvas */
+    color: var(--color-text-dark); 
     padding: 0.75rem 1rem;
-    border-bottom: 1px solid var(--color-gray-light); /* Separador entre elementos */
+    border-bottom: 1px solid var(--color-gray-light); 
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
@@ -276,7 +276,7 @@ main {
     color: var(--color-white) !important;
     border-color: var(--matcha-manga-green) !important;
     margin-top: 1rem;
-    width: 100%; /* Asegura que ocupe todo el ancho */
+    width: 100%; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -288,7 +288,7 @@ main {
 }
 
 
-/* 4. Cards de Productos  */
+
 
 .card {
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -296,7 +296,7 @@ main {
     overflow: hidden;
     background-color: var(--color-white);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid var(--color-gray-medium); /* Borde suave */
+    border: 1px solid var(--color-gray-medium); 
 }
 
 .card:hover {
@@ -307,7 +307,7 @@ main {
 .card-img-top {
     width: 100%;
     height: 220px;
-    object-fit: contain; /* Ajusta la imagen dentro del contenedor */
+    object-fit: contain; 
     background-color: var(--color-background-light);
     padding: 15px;
     border-bottom: 1px solid var(--color-gray-light);
@@ -322,12 +322,12 @@ main {
 .card-title {
     font-size: 1.15rem;
     font-weight: bold;
-    min-height: 3em; /* Para consistencia de altura de títulos */
+    min-height: 3em; 
     line-height: 1.4em;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Limita a 2 líneas */
+    -webkit-line-clamp: 2; 
     line-clamp: 2;
     -webkit-box-orient: vertical;
     color: var(--color-text-dark);
@@ -336,7 +336,7 @@ main {
 
 .card-text.text-muted.small {
     font-size: 0.9rem;
-    min-height: 1.5em; /* Para consistencia de altura de autor/tipo */
+    min-height: 1.5em;
     color: var(--color-text-dark) !important;
     opacity: 0.8;
     margin-bottom: 0.5rem;
@@ -345,7 +345,7 @@ main {
 .card-text.fw-bold.small {
     font-size: 1.2rem;
     color: var(--matcha-manga-green);
-    margin-top: auto; /* Empuja el precio y botón al final */
+    margin-top: auto; 
     margin-bottom: 1rem;
 }
 
@@ -374,7 +374,7 @@ main {
     border-radius: 0.5rem;
     padding: 0.6rem 1rem;
     transition: all 0.3s ease;
-    width: 100%; /* Asegura que ocupe todo el ancho de la tarjeta */
+    width: 100%; 
 }
 
 .btn-primary:hover {
@@ -388,7 +388,7 @@ main {
 .btn-warning {
     background-color: var(--matcha-manga-salmon);
     border-color: var(--matcha-manga-salmon);
-    color: var(--color-text-light); /* Texto claro sobre amarillo */
+    color: var(--color-text-light); 
 }
 
 .btn-warning:hover {
@@ -412,7 +412,6 @@ main {
     background-color: var(--matcha-manga-green);
     border-color: var(--matcha-manga-green);
     color: var(--color-white);
-    /* width: 100%; */ /* */
 }
 
 .btn-success:hover {
@@ -433,7 +432,7 @@ main {
 }
 
 .modal-header {
-    background-color: var(--matcha-manga-red); /* Usando el rojo de tu paleta */
+    background-color: var(--matcha-manga-red);
     color: var(--color-white);
     border-bottom: none;
     border-top-left-radius: 0.5rem;
@@ -475,7 +474,7 @@ main {
 
 .table {
     border-radius: 0.5rem;
-    overflow: hidden; /* Asegura que los bordes redondeados se apliquen a la tabla */
+    overflow: hidden; 
 }
 
 .table thead {
@@ -485,14 +484,14 @@ main {
 
 .table th,
 .table td {
-    vertical-align: middle; /* Centra el contenido verticalmente */
+    vertical-align: middle; 
 }
 
 #adminProductsTableBody img {
     width: 50px;
     height: 50px;
     object-fit: cover;
-    border-radius: 5px; /* Pequeño radio en las esquinas de las imágenes de la tabla */
+    border-radius: 5px; 
     border: 1px solid var(--color-gray-light);
 }
 
@@ -506,15 +505,15 @@ main {
 /* 8. Footer  */
 
 footer {
-    background-color: var(--color-background-dark); /* Asegura el fondo oscuro */
-    color: var(--color-text-light); /* Asegura el texto blanco */
+    background-color: var(--color-background-dark); 
+    color: var(--color-text-light); 
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     border-top: 3px solid var(--matcha-manga-green);
 }
 
 footer a {
-    color: var(--color-text-light); /* Color de enlace predeterminado en el footer */
+    color: var(--color-text-light); 
     text-decoration: none;
     transition: color 0.3s ease;
 }
@@ -524,7 +523,7 @@ footer a:hover {
 }
 
 footer .text-warning {
-    color: var(--matcha-manga-light-green) !important; /* Asegura que los títulos sean verdes claros */
+    color: var(--matcha-manga-light-green) !important; 
 }
 
 footer p {
@@ -569,24 +568,24 @@ footer .list-inline-item .fab:hover {
 /* Dispositivos medianos (ej. tablets, 768px y más) */
 @media (min-width: 768px) {
     .navbar-brand img {
-        height: 70px; /* Logo un poco más grande en tablets */
+        height: 70px; 
     }
     .card-img-top {
-        height: 250px; /* Altura de imagen de producto un poco más grande */
+        height: 250px; 
     }
     
 }
 
 /* Dispositivos grandes (ej. desktops, 992px y más) */
 @media (min-width: 992px) {
-    /* Oculta la navbar móvil en desktop */
+   
     .navbar.d-lg-none {
         display: none !important;
     }
 
     /* Restaura la visibilidad y el layout de la navbar de escritorio */
     .navbar-expand-lg.d-lg-flex {
-        display: flex !important; /* Asegura que la navbar de desktop se muestre como flex */
+        display: flex !important; 
     }
 
     .navbar .container-fluid {
@@ -660,53 +659,52 @@ footer .list-inline-item .fab:hover {
 
 /* Media Query para móvil (hasta 991.98px) */
 @media (max-width: 991.98px) {
-    /* Oculta la navbar de escritorio en mobile */
+    
     .navbar-expand-lg.d-lg-flex {
         display: none !important;
     }
 
     /* Ajustes específicos para la navbar móvil */
     .navbar.d-lg-none {
-        padding: 0.5rem 0.75rem; /* Reduce un poco el padding horizontal general de la navbar */
+        padding: 0.5rem 0.75rem; 
         background-color: var(--matcha-manga-red);
         border-bottom: 3px solid var(--matcha-manga-green);
-        /* Alinea los items en una fila y distribuye espacio */
-        display: flex; /* Asegura flexbox para el container-fluid */
-        align-items: center; /* Centra verticalmente */
-        justify-content: space-between; /* Distribuye los items */
+        display: flex; 
+        align-items: center; 
+        justify-content: space-between;
     }
 
     /* Buscador móvil */
     #searchFormMobile {
-        flex-grow: 1; /* Permite que el formulario de búsqueda ocupe el espacio disponible */
-        margin-left: 0.25rem; /* Reduce un poco el margen a los lados del buscador */
+        flex-grow: 1; 
+        margin-left: 0.25rem; 
         margin-right: 0.25rem;
-        display: flex; /* Asegura flexbox dentro del formulario para input y botón */
+        display: flex; 
     }
 
     #searchFormMobile .form-control {
-        flex-grow: 1; /* El input crecerá para ocupar el espacio */
-        min-width: 0; /* Permite que el input se encoja si es necesario */
-        padding: 0.375rem 0.75rem; /* Reduce el padding del input de búsqueda */
-        font-size: 0.875rem; /* Reduce un poco el tamaño de la fuente del placeholder */
-        height: 38px; /* Fija una altura si es necesario para consistencia */
+        flex-grow: 1;
+        min-width: 0; 
+        padding: 0.375rem 0.75rem; 
+        font-size: 0.875rem; 
+        height: 38px; 
     }
 
     /* Oculta el texto "Buscar" y muestra solo el ícono para el botón de búsqueda en móvil */
     #searchFormMobile .btn {
-        padding: 0.375rem 0.6rem; /* Ajusta el padding del botón de búsqueda */
-        font-size: 1.1rem; /* Asegura que el ícono siga viéndose bien */
-        height: 38px; /* Misma altura que el input para alineación */
-        display: flex; /* Asegura que el ícono esté centrado si hay espacio */
+        padding: 0.375rem 0.6rem; 
+        font-size: 1.1rem; 
+        height: 38px; 
+        display: flex; 
         align-items: center;
         justify-content: center;
     }
 
-    #searchFormMobile .btn span { /* Oculta el texto "Buscar" en el botón de búsqueda */
+    #searchFormMobile .btn span { 
         display: none;
     }
-    #searchFormMobile .btn .fas { /* Asegura que el ícono sea visible */
-        margin-right: 0; /* Elimina margen extra del ícono si estaba */
+    #searchFormMobile .btn .fas { 
+        margin-right: 0;
     }
 
     /* Botones de toggler y usuario en la navbar móvil */
@@ -715,11 +713,11 @@ footer .list-inline-item .fab:hover {
         font-size: 1.3rem;
         color: var(--color-white) !important;
         border: none;
-        height: 38px; /* Asegura la misma altura que el campo de búsqueda y botón */
-        display: flex; /* Habilita flexbox para centrar el ícono */
-        align-items: center; /* Centra verticalmente el ícono */
-        justify-content: center; /* Centra horizontalmente el ícono */
-        padding: 0; /* Remueve el padding ya que la altura es fija y centramos con flex */
+        height: 38px; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        padding: 0;
     }
 
     /* Estilo del botón de usuario en la navbar móvil  */
@@ -740,14 +738,14 @@ footer .list-inline-item .fab:hover {
     /* para pantallas muy muy pequeñas (como iPhone SE verticalmente) */
     @media (max-width: 400px) {
         .navbar.d-lg-none {
-            padding: 0.4rem 0.5rem; /* Más reducción en el padding general */
+            padding: 0.4rem 0.5rem; 
         }
         #searchFormMobile {
             margin-left: 0.15rem;
             margin-right: 0.15rem;
         }
         #searchFormMobile .form-control {
-            font-size: 0.8rem; /* Fuente un poco más pequeña */
+            font-size: 0.8rem;
             height: 36px;
         }
         #searchFormMobile .btn {
@@ -757,7 +755,7 @@ footer .list-inline-item .fab:hover {
         .navbar.d-lg-none .navbar-toggler,
         .navbar.d-lg-none .btn-link {
             font-size: 1.2rem;
-            height: 36px; /* Ajuste de altura para pantallas muy pequeñas */
+            height: 36px;
         }
         
     }

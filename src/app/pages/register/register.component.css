@@ -1,6 +1,6 @@
 img.padding-logo {
     padding: 10px;
-    width: 150px; /* Ajusta el tamaño según sea necesario */
-    height: auto; /* Mantiene la proporción de la imagen */
+    width: 150px; 
+    height: auto; 
     justify-items: center;
   }

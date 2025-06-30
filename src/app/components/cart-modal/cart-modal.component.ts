@@ -1,11 +1,10 @@
-// src/app/components/cart-modal/cart-modal.component.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CartItem, CartService } from '../../services/cart.service';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router'; // <-- Importa Router!
+import { Router } from '@angular/router'; 
 
-declare var bootstrap: any; // Declara bootstrap para que TypeScript lo reconozca
+declare var bootstrap: any; 
 
 @Component({
   selector: 'app-cart-modal',
@@ -59,20 +58,20 @@ export class CartModalComponent implements OnInit, OnDestroy {
 
   clearCart(): void {
     this.cartService.clearCart();
-    this.hideModal(); // Llama a la función para ocultar el modal
+    this.hideModal(); 
   }
 
   checkout(): void {
     if (this.cartItems.length > 0) {
       this.cartService.clearCart();
-      this.hideModal(); // Llama a la función para ocultar el modal
+      this.hideModal(); 
       this.router.navigate(['/simulated-payment']);
     } else {
       alert('Tu carrito está vacío. Añade productos antes de finalizar la compra.');
     }
   }
 
-  // Nuevo método para ocultar el modal usando Bootstrap JS
+
   private hideModal(): void {
     const cartModalElement = document.getElementById('cartModal');
     if (cartModalElement) {

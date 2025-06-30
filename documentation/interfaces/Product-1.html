@@ -1,0 +1,688 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>matcha-manga-web documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">matcha-manga-web documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  Product</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/services/product.service.ts</code>
+        </p>
+
+
+
+
+        <section data-compodoc="block-index">
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#author" 
+>
+                                            author
+                                        </a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#description" 
+>
+                                            description
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#id" 
+>
+                                            id
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#image" 
+>
+                                            image
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#price" 
+>
+                                            price
+                                        </a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#stock" 
+>
+                                            stock
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#title" 
+>
+                                            title
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#type" 
+>
+                                            type
+                                        </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section data-compodoc="block-properties">
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="author"></a>
+                                        <span class="name "><b>author</b>
+                                            <a href="#author">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>author:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="description"></a>
+                                        <span class="name "><b>description</b>
+                                            <a href="#description">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>description:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="id"></a>
+                                        <span class="name "><b>id</b>
+                                            <a href="#id">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>id:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="image"></a>
+                                        <span class="name "><b>image</b>
+                                            <a href="#image">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>image:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="price"></a>
+                                        <span class="name "><b>price</b>
+                                            <a href="#price">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>price:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="stock"></a>
+                                        <span class="name "><b>stock</b>
+                                            <a href="#stock">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>stock:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="title"></a>
+                                        <span class="name "><b>title</b>
+                                            <a href="#title">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>title:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="type"></a>
+                                        <span class="name "><b>type</b>
+                                            <a href="#type">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>type:     <code>&quot;manga&quot; | &quot;comic&quot;</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>&quot;manga&quot; | &quot;comic&quot;</code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, Inject, PLATFORM_ID } from &#x27;@angular/core&#x27;; 
+import { isPlatformBrowser } from &#x27;@angular/common&#x27;; 
+import { BehaviorSubject, Observable, of } from &#x27;rxjs&#x27;;
+
+
+export interface Product {
+  id: number;
+  title: string;
+  author: string;
+  price: number;
+  image: string;
+  type: &#x27;manga&#x27; | &#x27;comic&#x27;;
+  stock?: number;
+  description?: string;
+}
+
+@Injectable({
+  providedIn: &#x27;root&#x27;
+})
+export class ProductService {
+  private products: Product[] &#x3D; [];
+  private productsSubject: BehaviorSubject&lt;Product[]&gt; &#x3D; new BehaviorSubject&lt;Product[]&gt;([]);
+  public products$: Observable&lt;Product[]&gt; &#x3D; this.productsSubject.asObservable();
+
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object 
+  ) {
+    if (isPlatformBrowser(this.platformId)) { 
+      this.loadProductsFromLocalStorage();
+    } else {
+      this.initializeDefaultProducts();
+    }
+  }
+
+  private initializeDefaultProducts(): void {
+  this.products &#x3D; [
+    { id: 1, title: &#x27;Fullmetal Alchemist - Tomo 1&#x27;, author: &#x27;Hiromu Arakawa&#x27;, price: 9.990, image: &#x27;manga1.jpg&#x27;, type: &#x27;manga&#x27; }, 
+    { id: 2, title: &#x27;Shingeki no Kyojin - Tomo 1&#x27;, author: &#x27;Hajime Isayama&#x27;, price: 11.990, image: &#x27;manga2.jpg&#x27;, type: &#x27;manga&#x27; }, 
+    { id: 3, title: &#x27;JoJos Bizarre Adventure: Stardust Crusaders - Tomo 2&#x27;, author: &#x27;Hirohiko Araki&#x27;, price: 16.990, type: &#x27;manga&#x27;, image: &#x27;manga3.jpg&#x27; }, 
+    { id: 4, title: &#x27;Dragon Ball - Tomo 1&#x27;, author: &#x27;Akira Toriyama&#x27;, price: 9.990, image: &#x27;manga4.jpg&#x27;, type: &#x27;manga&#x27; }, 
+    { id: 5, title: &#x27;One Piece - Tomo 2&#x27;, author: &#x27;Eiichirō Oda&#x27;, price: 9.990, image: &#x27;manga5.jpg&#x27;, type: &#x27;manga&#x27; }, 
+    { id: 6, title: &#x27;Akatsuki no Yona - Tomo 12&#x27;, author: &#x27;Mizuho Kusanagi&#x27;, price: 11.990, image: &#x27;manga6.jpg&#x27;, type: &#x27;manga&#x27; }, 
+    { id: 7, title: &#x27;Pokémon Rojo - Tomo 1&#x27;, author: &#x27;Hidenori Kusaka&#x27;, price: 18.990, image: &#x27;manga7.jpg&#x27;, type: &#x27;manga&#x27; }, 
+    { id: 8, title: &#x27;Cardcaptor Sakura - Tomo 1&#x27;, author: &#x27;CLAMP&#x27;, price: 15.990, image: &#x27;manga8.jpg&#x27;, type: &#x27;manga&#x27; }, 
+    { id: 9, title: &#x27;Fairy Tail - Tomo 34&#x27;, author: &#x27;Hiro Mashima&#x27;, price: 9.990, image: &#x27;manga9.jpg&#x27;, type: &#x27;manga&#x27; },
+    { id: 10, title: &#x27;Dungeon Meshi - Tomo 2&#x27;, author: &#x27;Ryōko Kui&#x27;, price: 15.990, image: &#x27;manga10.jpg&#x27;, type: &#x27;manga&#x27; }, 
+    { id: 11, title: &#x27;Inuyasha - Tomo 18&#x27;, author: &#x27;Rumiko Takahashi&#x27;, price: 15.990, image: &#x27;manga11.jpg&#x27;, type: &#x27;manga&#x27; }, 
+    { id: 12, title: &#x27;Sword art online Phantom Bullet - Tomo 1&#x27;, author: &#x27;Reki Kawahara&#x27;, price: 9.990, image: &#x27;manga12.jpg&#x27;, type: &#x27;manga&#x27; }, 
+    { id: 13, title: &#x27;Batman N#50 &#x27;, author: &#x27;Scott Snyder,Marcio Takara,&#x27;, price: 9.990, image: &#x27;comic1.jpg&#x27;, type: &#x27;comic&#x27; }, 
+    { id: 14, title: &#x27;Watchmen&#x27;, author: &#x27;Alan Moore &#x27;, price: 24.990, image: &#x27;comic2.jpg&#x27;, type: &#x27;comic&#x27; }, 
+    { id: 15, title: &#x27;The Amazing Spider-Man N#70&#x27;, author: &#x27;Joe Kelly&#x27;, price: 55.000, image: &#x27;comic3.jpg&#x27;, type: &#x27;comic&#x27; }, 
+    { id: 16, title: &#x27;batman who laughs&#x27;, author: &#x27;Scott Snyder&#x27;, price: 27.990, image: &#x27;comic4.jpg&#x27;, type: &#x27;comic&#x27; }, 
+    { id: 17, title: &#x27;Los Vengadores N#1&#x27;, author: &#x27;Stan Lee&#x27;, price: 49.990, image: &#x27;comic5.jpg&#x27;, type: &#x27;comic&#x27; }, 
+    { id: 18, title: &#x27;Spawn N#300&#x27;, author: &#x27;Scott Snyder&#x27;, price: 23.990, image: &#x27;comic6.jpg&#x27;, type: &#x27;comic&#x27; }, 
+    { id: 19, title: &#x27;Star Wars N#13&#x27;, author: &#x27;Greg Pak&#x27;, price: 9.990, image: &#x27;comic7.jpg&#x27;, type: &#x27;comic&#x27; }, 
+    { id: 20, title: &#x27;Venom: Lethal Protector N#11&#x27;, author: &#x27;David Michelinie&#x27;, price: 20.990, image: &#x27;comic8.jpg&#x27;, type: &#x27;comic&#x27; }, 
+    { id: 21, title: &#x27;X-Men (2024) N#1&#x27;, author: &#x27;Jed Mackay&#x27;, price: 9.990, image: &#x27;comic9.jpg&#x27;, type: &#x27;comic&#x27; }, 
+    { id: 22, title: &#x27;Iron Man N#26/145&#x27;, author: &#x27;Christopher Cantwell, Murewa Ayodele&#x27;, price: 7.990, image: &#x27;comic10.jpg&#x27;, type: &#x27;comic&#x27; },
+    { id: 23, title: &#x27;Invencible Vol.27&#x27;, author: &#x27;Robert Kirkman&#x27;, price: 25.650, image: &#x27;comic11.jpg&#x27;, type: &#x27;comic&#x27; }, 
+    { id: 24, title: &#x27;Warhammer 40k Ahriman Vol. 1: Exilio&#x27;, author: &#x27;John French&#x27;, price: 20.900, image: &#x27;comic12.jpg&#x27;, type: &#x27;comic&#x27; }, 
+  ];
+  this.productsSubject.next(this.products);
+}
+
+  private loadProductsFromLocalStorage(): void {
+    const storedComics &#x3D; localStorage.getItem(&#x27;comicsData&#x27;);
+    if (storedComics) {
+      this.products &#x3D; JSON.parse(storedComics);
+    } else {
+      this.initializeDefaultProducts();
+    }
+    this.productsSubject.next(this.products); 
+  }
+
+  private saveProductsToLocalStorage(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem(&#x27;comicsData&#x27;, JSON.stringify(this.products));
+    }
+  }
+
+  getProducts(): Observable&lt;Product[]&gt; {
+    return of(this.products);
+  }
+
+  getProductsByType(type: &#x27;manga&#x27; | &#x27;comic&#x27;): Observable&lt;Product[]&gt; {
+    const filteredProducts &#x3D; this.products.filter(p &#x3D;&gt; p.type &#x3D;&#x3D;&#x3D; type);
+    return of(filteredProducts);
+  }
+
+  getProductById(id: number): Observable&lt;Product | undefined&gt; {
+    const product &#x3D; this.products.find(p &#x3D;&gt; p.id &#x3D;&#x3D;&#x3D; id);
+    return of(product);
+  }
+
+  addProduct(product: Product): Observable&lt;Product&gt; {
+    const newId &#x3D; this.products.length &gt; 0 ? Math.max(...this.products.map(p &#x3D;&gt; p.id)) + 1 : 1;
+    const newProduct &#x3D; { ...product, id: newId };
+    this.products.push(newProduct);
+    this.saveProductsToLocalStorage(); 
+    this.productsSubject.next(this.products); 
+    return of(newProduct);
+  }
+
+  updateProduct(updatedProduct: Product): Observable&lt;boolean&gt; {
+    const index &#x3D; this.products.findIndex(p &#x3D;&gt; p.id &#x3D;&#x3D;&#x3D; updatedProduct.id);
+    if (index &gt; -1) {
+      this.products[index] &#x3D; updatedProduct;
+      this.saveProductsToLocalStorage(); 
+      this.productsSubject.next(this.products); 
+      return of(true);
+    }
+    return of(false);
+  }
+
+  deleteProduct(id: number): Observable&lt;boolean&gt; {
+    const initialLength &#x3D; this.products.length;
+    this.products &#x3D; this.products.filter(p &#x3D;&gt; p.id !&#x3D;&#x3D; id);
+    this.saveProductsToLocalStorage(); 
+    if (this.products.length &lt; initialLength) {
+      this.productsSubject.next(this.products); 
+      return of(true);
+    }
+    return of(false);
+  }
+}</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'Product-1.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -1,4 +1,3 @@
-// src/app/pages/register/register.component.ts
 import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -30,8 +29,6 @@ export class RegisterComponent {
   errorMessage: string = '';
   successMessage: string = '';
   passwordMismatch: boolean = false;
-
-  // ¡NUEVA PROPIEDAD! Definición de la expresión regular en TypeScript
   passwordPattern: string = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};\':"\\\\|,.<>\\/?]).{8,20}$';
 
 

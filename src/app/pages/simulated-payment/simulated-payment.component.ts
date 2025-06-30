@@ -1,16 +1,13 @@
-// src/app/components/simulated-payment/simulated-payment.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router'; // Importar RouterModule si hay routerLink en el template
+import { RouterModule } from '@angular/router'; 
 
 @Component({
   selector: 'app-simulated-payment',
   standalone: true,
-  imports: [CommonModule, RouterModule], // Añade RouterModule si usas routerLink
+  imports: [CommonModule, RouterModule], 
   templateUrl: './simulated-payment.component.html',
-  styleUrls: ['./simulated-payment.component.css'] // Si tienes un archivo CSS para este componente
+  styleUrls: ['./simulated-payment.component.css'] 
 })
 export class SimulatedPaymentComponent {
-  // Aquí podrías añadir lógica si la necesitas, como un temporizador
-  // o mostrar detalles de la compra si se pasaran por estado del router.
 }

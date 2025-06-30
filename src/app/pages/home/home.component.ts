@@ -1,11 +1,10 @@
-// src/app/pages/home/home.component.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product, ProductService } from '../../services/product.service';
 import { Subscription, combineLatest } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 import { CartService } from '../../services/cart.service';
-import { ActivatedRoute, Params } from '@angular/router'; // Asegúrate de importar 'Params'
+import { ActivatedRoute, Params } from '@angular/router'; 
 
 @Component({
   selector: 'app-home',
@@ -32,11 +31,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.combinedSubscription = combineLatest([
       this.productService.products$.pipe(startWith([])),
-      this.route.queryParams.pipe(startWith({} as Params)) // Asegura el tipo Params
+      this.route.queryParams.pipe(startWith({} as Params)) 
     ]).subscribe(([products, params]) => {
       this.originalAllProducts = products;
 
-      // Acceso seguro a 'q' y fallback
+
       const searchTerm = (params['q'] as string) || ''; 
 
       let filteredProducts: Product[] = [];

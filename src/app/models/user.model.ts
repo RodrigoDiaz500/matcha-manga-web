@@ -1,6 +1,5 @@
-// src/app/models/user.model.ts
 export interface User {
-  id?: string; // Mantener como string, como está definido.
+  id?: string; 
   username?: string;
   email: string;
   password?: string;

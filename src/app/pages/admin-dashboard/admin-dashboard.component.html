@@ -25,7 +25,6 @@
                     <td>${{ product.price.toFixed(3) }}</td>
                     <td>
                         <div class="d-flex flex-column flex-sm-row gap-2">
-                            <!-- CAMBIO CLAVE AQUÍ: Llama a openProductModal en lugar de editProduct -->
                             <button class="btn btn-sm btn-warning flex-grow-1" (click)="openProductModal(product)">Editar</button>
                             <button class="btn btn-sm btn-danger delete-product flex-grow-1" (click)="deleteProduct(product.id)">Eliminar</button>
                         </div>

@@ -12,8 +12,8 @@ describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
   let authServiceSpy: jasmine.SpyObj<AuthService>;
-  let router: Router; // Declaramos 'router' como el tipo Router real
-  let navigateSpy: jasmine.Spy; // Este será el espía específico para el método navigate
+  let router: Router;
+  let navigateSpy: jasmine.Spy;
   let currentUserSubject: BehaviorSubject<User | undefined>;
 
   const mockLoggedInUser: User = {
@@ -42,20 +42,16 @@ describe('ProfileComponent', () => {
         ProfileComponent,
         FormsModule,
         CommonModule,
-        RouterTestingModule.withRoutes([]) // Esto provee un mock de Router
+        RouterTestingModule.withRoutes([]) 
       ],
       providers: [
         { provide: AuthService, useValue: authServiceSpy }
-        // No necesitamos proveer Router aquí; RouterTestingModule ya lo hace
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
-
-    // Obtenemos la instancia del Router que TestBed ha provisto (del RouterTestingModule)
     router = TestBed.inject(Router);
-    // Ahora, espiamos específicamente el método 'navigate' de esa instancia
     navigateSpy = spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
 
     component.profileForm = {
@@ -74,14 +70,10 @@ describe('ProfileComponent', () => {
   }));
 
   afterEach(() => {
-    // No se necesita nada aquí si todas las asincronías están manejadas por fakeAsync/tick
   });
 
-  // --- ÚNICA PRUEBA UNITARIA SOLICITADA ---
 
   it('debe actualizar exitosamente el perfil del usuario sin cambiar la contraseña', fakeAsync(() => {
-    // 1. **Configuración (Arrange):**
-
     authServiceSpy.updateUser.and.returnValue(of(true));
 
     component.editableUser = {
@@ -94,12 +86,8 @@ describe('ProfileComponent', () => {
     };
 
     component.changePasswordMode = false;
-
-    // 2. **Acción (Act):**
     component.onUpdateProfile();
     tick();
-
-    // 3. **Verificación (Assert):**
     expect(authServiceSpy.updateUser).toHaveBeenCalledWith(
       jasmine.objectContaining({
         id: mockLoggedInUser.id,
@@ -117,9 +105,6 @@ describe('ProfileComponent', () => {
     expect(component.currentPassword).toBe('');
     expect(component.newPassword).toBe('');
     expect(component.confirmNewPassword).toBe('');
-
-    // Verificamos que el método navigate del Router NO fue llamado en este escenario de éxito,
-    // ya que no debería haber redirección.
     expect(navigateSpy).not.toHaveBeenCalled();
   }));
 });

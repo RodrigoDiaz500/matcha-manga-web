@@ -1,4 +1,3 @@
-// src/app/pages/profile/profile.component.ts
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -16,11 +15,11 @@ import { Subscription } from 'rxjs';
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   currentUser: User | undefined;
-  editableUser: User | undefined; // Copia editable para el formulario
+  editableUser: User | undefined; 
   private userSubscription!: Subscription;
   successMessage: string = '';
   errorMessage: string = '';
-  changePasswordMode: boolean = false; // Para controlar la visibilidad de campos de contraseña
+  changePasswordMode: boolean = false; 
   currentPassword: string = '';
   newPassword: string = '';
   confirmNewPassword: string = '';
@@ -33,10 +32,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.userSubscription = this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
       if (user) {
-        // Crear una copia profunda del usuario para editar
-        this.editableUser = { ...user, password: '' }; // No cargamos la contraseña existente en el formulario
+        this.editableUser = { ...user, password: '' }; 
       } else {
-        // Si no hay usuario logueado, redirigir al login (aunque el guard debería manejarlo)
         this.router.navigate(['/login']);
       }
     });
@@ -57,18 +54,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Preparar el objeto para enviar al servicio
     const userToUpdate: User = {
       ...this.editableUser,
-      id: this.currentUser?.id, // Asegurar que el ID del usuario original se mantenga
-      role: this.currentUser?.role || 'client' // Mantener el rol original
+      id: this.currentUser?.id, 
+      role: this.currentUser?.role || 'client' 
     };
 
-    // Si el usuario está cambiando la contraseña
     if (this.changePasswordMode) {
-      // Validar la contraseña actual (simulación)
-      // En una app real, esto debería ser validado en el backend
-      const storedUserWithPassword = this.authService['users'].find(u => u.id === this.currentUser?.id); // Acceso a la lista interna para validar la contraseña
+      const storedUserWithPassword = this.authService['users'].find(u => u.id === this.currentUser?.id); 
       if (!storedUserWithPassword || storedUserWithPassword.password !== this.currentPassword) {
         this.errorMessage = 'La contraseña actual es incorrecta.';
         return;
@@ -81,10 +74,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.errorMessage = 'La nueva contraseña debe tener al menos 6 caracteres.';
         return;
       }
-      userToUpdate.password = this.newPassword; // Añadir la nueva contraseña al objeto de actualización
+      userToUpdate.password = this.newPassword; 
     } else {
-      // Si no se está cambiando la contraseña, asegurarse de no enviar una contraseña vacía o modificada
-      userToUpdate.password = this.currentUser?.password; // Mantener la contraseña existente si no se cambia
+      userToUpdate.password = this.currentUser?.password; 
     }
 
 
@@ -92,7 +84,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       success => {
         if (success) {
           this.successMessage = 'Perfil actualizado exitosamente.';
-          // Resetear campos de contraseña después de la actualización exitosa
           this.changePasswordMode = false;
           this.currentPassword = '';
           this.newPassword = '';
@@ -110,7 +101,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   togglePasswordMode(): void {
     this.changePasswordMode = !this.changePasswordMode;
-    // Limpiar campos de contraseña al cambiar el modo
     this.currentPassword = '';
     this.newPassword = '';
     this.confirmNewPassword = '';

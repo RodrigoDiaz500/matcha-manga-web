@@ -1,4 +1,3 @@
-// src/app/services/cart.service.ts
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
@@ -6,7 +5,7 @@ import { map, switchMap, take } from 'rxjs/operators';
 import { Product, ProductService } from './product.service';
 
 export interface CartItem {
-  product: Product; // Asegura que 'product' es de tipo Product
+  product: Product; 
   quantity: number;
 }
 
@@ -35,24 +34,21 @@ export class CartService {
     const storedCart = localStorage.getItem('cart');
     if (storedCart) {
       const cartItems: CartItem[] = JSON.parse(storedCart);
-      // Es importante re-obtener los productos completos para asegurar que los precios y detalles sean los actuales
-      // Esto asume que ProductService.getProductById devuelve un Observable<Product | undefined>
       const productObservables = cartItems.map(item =>
         this.productService.getProductById(item.product.id).pipe(
           map(product => product ? { product, quantity: item.quantity } : undefined)
         )
       );
 
-      // Combinar todos los observables de productos para reconstruir el carrito
       if (productObservables.length > 0) {
         combineLatest(productObservables).pipe(
           map(items => items.filter(item => item !== undefined) as CartItem[]),
-          take(1) // Tomar solo la primera emisión y completar
+          take(1) 
         ).subscribe(fullCartItems => {
           this.cartSubject.next(fullCartItems);
         });
       } else {
-        this.cartSubject.next([]); // Si no hay ítems en el localStorage, inicializar como vacío
+        this.cartSubject.next([]); 
       }
     }
   }
@@ -103,8 +99,8 @@ export class CartService {
   }
 
   clearCart(): void {
-    this.cartSubject.next([]); // <--- ¡Esta línea es la clave para vaciar el carrito!
-    this.saveCartToLocalStorage([]); // Limpiar también el almacenamiento local
+    this.cartSubject.next([]); 
+    this.saveCartToLocalStorage([]); 
     console.log("Carrito vaciado.");
   }
 }

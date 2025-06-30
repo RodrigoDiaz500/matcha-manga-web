@@ -1,18 +1,18 @@
  .login-container {
-    background-color: #f8f9fa; /* Un fondo claro para la página de login */
+    background-color: #f8f9fa; 
   }
   .card {
     border-radius: 0.75rem;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important; /* Sombra más pronunciada */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important; 
   }
 
 img.padding-logo {
     padding: 10px;
-    width: 150px; /* Ajusta el tamaño según sea necesario */
-    height: auto; /* Mantiene la proporción de la imagen */
+    width: 150px; 
+    height: auto; 
     justify-items: center;
   }
   
   .form-label {
-    font-weight: bold; /* Resalta las etiquetas de los campos */
+    font-weight: bold; 
   }

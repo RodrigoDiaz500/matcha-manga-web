@@ -1,5 +1,3 @@
-// src/app/pages/register/register.component.spec.ts
-
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { RegisterComponent } from './../../pages/register/register.component';
 import { FormsModule, NgForm, FormGroup, FormControl, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
@@ -11,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 
-// El validador de coincidencia de contraseñas (asegurarse de que sea el mismo que en tu componente)
+
 const passwordMatchValidator: ValidatorFn = (formGroup: AbstractControl) => {
   const passwordControl = formGroup.get('password');
   const confirmPasswordControl = formGroup.get('confirmPassword');
@@ -40,10 +38,9 @@ describe('RegisterComponent', () => {
   let authServiceSpy: jasmine.SpyObj<AuthService>;
   let router: Router;
   let navigateSpy: jasmine.Spy;
-  let mockFormGroup: FormGroup; // Será una instancia real de FormGroup
-  // ELIMINADO: let mockResetFormSpy: jasmine.Spy;
-  let mockMarkAllAsTouchedSpy: jasmine.Spy; // Espía para FormGroup.markAllAsTouched
-  let mockFormGroupResetSpy: jasmine.Spy; // Espía para FormGroup.reset
+  let mockFormGroup: FormGroup;
+  let mockMarkAllAsTouchedSpy: jasmine.Spy;
+  let mockFormGroupResetSpy: jasmine.Spy; 
 
   const mockNewUser: User = {
     fullName: 'New User Test',
@@ -62,10 +59,10 @@ describe('RegisterComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        RegisterComponent, // Asegúrate de que RegisterComponent es un componente standalone importado aquí
+        RegisterComponent, 
         FormsModule,
         CommonModule,
-        RouterTestingModule.withRoutes([]) // Proporciona el Router
+        RouterTestingModule.withRoutes([]) 
       ],
       providers: [
         { provide: AuthService, useValue: authServiceSpy },
@@ -92,36 +89,23 @@ describe('RegisterComponent', () => {
 
     fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
-
     router = TestBed.inject(Router);
     navigateSpy = spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
-
     component.passwordPattern = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};\':"\\\\|,.<>\\/?]).{8,20}$';
-
-    // *** CLAVE: Crear una INSTANCIA REAL de FormGroup y sus FormControl ***
     mockFormGroup = new FormGroup({
       fullName: new FormControl(mockNewUser.fullName, Validators.required),
       email: new FormControl(mockNewUser.email, [Validators.required, Validators.email]),
-      // Usa el patrón del componente para el validador
       password: new FormControl(mockNewUser.password, [Validators.required, Validators.pattern(component.passwordPattern)]),
       address: new FormControl(mockNewUser.address),
       phone: new FormControl(mockNewUser.phone),
       confirmPassword: new FormControl(mockNewUser.password, Validators.required)
     });
 
-    // Añadir el validador de coincidencia de contraseñas a la instancia real de FormGroup
     mockFormGroup.addValidators(passwordMatchValidator);
-    // Recalcular la validez después de añadir validadores y valores iniciales
     mockFormGroup.updateValueAndValidity();
-
-    // *** CLAVE: Espiar los métodos de esta INSTANCIA REAL de FormGroup ***
-    mockMarkAllAsTouchedSpy = spyOn(mockFormGroup, 'markAllAsTouched').and.callThrough(); // Espía y permite que el método original se ejecute
-    mockFormGroupResetSpy = spyOn(mockFormGroup, 'reset').and.callThrough(); // Espía y permite que el método original se ejecute
-
-    // ELIMINADO: mockResetFormSpy = jasmine.createSpy('resetForm');
-
-    // --- Simular la resolución de @ViewChild para NgForm ---
-    fixture.detectChanges(); // Ejecutar la detección de cambios para que Angular resuelva el @ViewChild.
+    mockMarkAllAsTouchedSpy = spyOn(mockFormGroup, 'markAllAsTouched').and.callThrough(); 
+    mockFormGroupResetSpy = spyOn(mockFormGroup, 'reset').and.callThrough(); 
+    fixture.detectChanges(); 
 
     const formDebugElement = fixture.debugElement.query(By.css('form'));
     let ngFormInstance: NgForm | null = null;
@@ -131,28 +115,22 @@ describe('RegisterComponent', () => {
     }
 
     if (ngFormInstance) {
-      // Reemplazar la propiedad 'form' de la instancia real de NgForm con nuestro mockFormGroup (que es un FormGroup real).
       (ngFormInstance as any).form = mockFormGroup;
-      // Asignar esta instancia de NgForm al componente.
       component.registerForm = ngFormInstance;
-      // ELIMINADO: Ya NO NECESITAMOS REEMPLAZAR NgForm.resetForm con un espía directo.
-      // Su implementación real llamará a mockFormGroup.reset()
     } else {
-      console.warn('Advertencia: No se pudo obtener la instancia de NgForm desde el DOM. Usando mock directo de NgForm. Verifica tu HTML (#registerForm="ngForm").');
-      // Fallback si NgForm no se encuentra (menos ideal, pero evita errores de tiempo de ejecución)
+      console.warn('Advertencia: No se pudo obtener la instancia de NgForm desde el DOM. Usando mock directo de NgForm (#registerForm="ngForm").');
       component.registerForm = {
         form: mockFormGroup,
         value: (mockFormGroup as any).value,
         valid: (mockFormGroup as any).valid,
         invalid: (mockFormGroup as any).invalid,
-        resetForm: () => mockFormGroup.reset(), // Si el componente llama directamente a component.registerForm.resetForm()
+        resetForm: () => mockFormGroup.reset(), 
       } as unknown as NgForm;
     }
   });
 
-  // Aserciones para el FormGroup para verificar su validez antes de la acción
+
   beforeEach(() => {
-    // Establecer los valores del formulario real para que sea válido
     mockFormGroup.setValue({
       fullName: mockNewUser.fullName,
       email: mockNewUser.email,
@@ -161,11 +139,10 @@ describe('RegisterComponent', () => {
       phone: mockNewUser.phone,
       confirmPassword: mockNewUser.password
     });
-    // Forzar el estado de `newUser` y `confirmPassword` en el componente para que coincida con el formulario
     component.newUser = { ...mockNewUser };
     component.confirmPassword = mockNewUser.password || '';
 
-    // Asegurar que el formulario real esté válido con los datos proporcionados
+
     if (!mockFormGroup.valid) {
       console.error('El mockFormGroup NO es válido antes de la prueba. Errores:', mockFormGroup.errors);
       Object.keys(mockFormGroup.controls).forEach(key => {
@@ -184,7 +161,7 @@ describe('RegisterComponent', () => {
     authServiceSpy.register.and.returnValue(true);
 
     component.onRegister();
-    tick(2000); // Avanza el tiempo para que el setTimeout del router.navigate se ejecute
+    tick(2000); 
 
     expect(mockMarkAllAsTouchedSpy).toHaveBeenCalled();
     expect(component.passwordMismatch).toBeFalse();
@@ -202,12 +179,8 @@ describe('RegisterComponent', () => {
 
     expect(component.successMessage).toBe('¡Registro exitoso! Ahora puedes iniciar sesión.');
     expect(component.errorMessage).toBe('');
-
-    // Aserción corregida para el reseteo del formulario
     expect(mockFormGroupResetSpy).toHaveBeenCalled();
-
     expect(component.confirmPassword).toBe('');
-
     expect(navigateSpy).toHaveBeenCalledWith(['/login']);
   }));
 });

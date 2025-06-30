@@ -1,4 +1,8 @@
-/* src/app/pages/perfil/perfil.component.css */
+.card {
+    border-radius: 0.75rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  }
+  
 .card-header {
   border-bottom: 0;
 }

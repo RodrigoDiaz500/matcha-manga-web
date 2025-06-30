@@ -1,4 +1,3 @@
-// src/app/components/header/header.component.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { CartService } from '../../services/cart.service';
@@ -52,12 +51,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Lógica para manejar la búsqueda
+
   onSearchSubmit(query: string): void {
   if (query && query.trim() !== '') {
     this.router.navigate(['/'], { queryParams: { q: query.trim() } });
   } else {
-    this.router.navigate(['/']); // ¡Esta línea es CRÍTICA!
+    this.router.navigate(['/']); 
   }
 }
 
