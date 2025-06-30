@@ -26,7 +26,7 @@ import { CartModalComponent } from './components/cart-modal/cart-modal.component
 })
 export class AppComponent implements OnInit {
   title = 'matcha-manga-web';
-  hideNavbar: boolean = false; 
+  hideNavbar: boolean = false;
   private hideNavbarRoutes: string[] = ['/login', '/register', '/forgot-password', '/reset-password'];
 
   constructor(private router: Router) {}
@@ -35,7 +35,8 @@ export class AppComponent implements OnInit {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
-      this.hideNavbar = this.hideNavbarRoutes.includes(event.urlAfterRedirects);
+      const currentPath = event.urlAfterRedirects.split('?')[0];
+      this.hideNavbar = this.hideNavbarRoutes.includes(currentPath);
     });
   }
 }

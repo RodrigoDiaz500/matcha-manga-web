@@ -228,7 +228,7 @@ main {
 
 /* Estilos para los Offcanvas */
 .offcanvas {
-    background-color: var(--color-background-light); /
+    background-color: var(--color-background-light); 
 }
 
 .offcanvas-header {
