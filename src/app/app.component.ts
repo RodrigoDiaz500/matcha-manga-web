@@ -5,7 +5,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs/operators';
-import { CartModalComponent } from './components/cart-modal/cart-modal.component'; // Asegúrate de que esta ruta sea correcta
+import { CartModalComponent } from './components/cart-modal/cart-modal.component';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +29,10 @@ export class AppComponent implements OnInit {
   title = 'matcha-manga-web';
   hideNavbar: boolean = false; // Esta variable controla la visibilidad de ambos
 
+  // Define las rutas donde el navbar y el footer deben estar ocultos
+  // ¡ACTUALIZA ESTA LISTA!
+  private hideNavbarRoutes: string[] = ['/login', '/register', '/forgot-password', '/reset-password'];
+
   constructor(private router: Router) {}
 
   ngOnInit() {
@@ -36,9 +40,8 @@ export class AppComponent implements OnInit {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
-      // Define las rutas donde el navbar y el footer no deben ser visibles
-      const routesToHide = ['/login', '/simulated-payment', '/register']; // Agrega o quita rutas según necesites
-      this.hideNavbar = routesToHide.includes(event.urlAfterRedirects);
+      // Verifica si la URL actual es una de las rutas donde se debe ocultar el navbar/footer
+      this.hideNavbar = this.hideNavbarRoutes.includes(event.urlAfterRedirects);
     });
   }
 }

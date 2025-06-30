@@ -3,8 +3,8 @@ import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../services/auth.service'; // Asegúrate de la ruta correcta
-import { User } from '../../models/user.model'; // Asegúrate de la ruta correcta
+import { AuthService } from '../../services/auth.service';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-register',
@@ -12,70 +12,74 @@ import { User } from '../../models/user.model'; // Asegúrate de la ruta correct
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule // Para routerLink
+    RouterModule
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  // Inicializa las propiedades del nuevo usuario
   newUser: User = {
-    id: 0, // <<-- Ahora 'id' en User puede ser 'number', así que '0' es válido. El servicio lo generará.
     fullName: '',
     email: '',
     password: '',
-    role: 'client', // Por defecto, los usuarios registrados son 'client'
+    role: 'client',
     address: '',
     phone: ''
   };
   confirmPassword: string = '';
   errorMessage: string = '';
   successMessage: string = '';
+  passwordMismatch: boolean = false;
+
+  // ¡NUEVA PROPIEDAD! Definición de la expresión regular en TypeScript
+  passwordPattern: string = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};\':"\\\\|,.<>\\/?]).{8,20}$';
+
 
   @ViewChild('registerForm') registerForm!: NgForm;
 
   constructor(private authService: AuthService, private router: Router) { }
 
   onRegister(): void {
-    this.errorMessage = ''; // Limpiar mensajes previos
+    this.errorMessage = '';
     this.successMessage = '';
+    this.passwordMismatch = false;
 
-    if (this.registerForm.valid) {
-      if (this.newUser.password !== this.confirmPassword) {
-        this.errorMessage = 'Las contraseñas no coinciden.';
-        return;
-      }
+    this.registerForm.form.markAllAsTouched();
 
-      // Verificar si el email ya existe antes de intentar registrar
-      if (this.authService.getUserByEmail(this.newUser.email)) {
-        this.errorMessage = 'Este correo electrónico ya está registrado.';
-        return;
-      }
+    if (this.registerForm.form.invalid) {
+      this.errorMessage = 'Por favor, corrige los errores en el formulario antes de enviar.';
+      return;
+    }
 
-      // Llamar al método register del AuthService
-      // No pasar 'id' ya que el servicio lo generará
-      const userToRegister: User = {
-        fullName: this.newUser.fullName,
-        email: this.newUser.email,
-        password: this.newUser.password,
-        role: 'client', // Asegurarse de que el rol sea 'client' por defecto para nuevos registros
-        address: this.newUser.address,
-        phone: this.newUser.phone
-      };
+    if (this.newUser.password !== this.confirmPassword) {
+      this.passwordMismatch = true;
+      this.errorMessage = 'Las contraseñas no coinciden. Por favor, verifica.';
+      return;
+    }
 
-      if (this.authService.register(userToRegister)) {
-        this.successMessage = '¡Registro exitoso! Ahora puedes iniciar sesión.';
-        this.registerForm.resetForm(); // Limpiar el formulario
-        // Opcional: redirigir automáticamente al login después de un breve retraso
-        setTimeout(() => {
-          this.router.navigate(['/login']);
-        }, 2000);
-      } else {
-        // Esto solo debería ocurrir si el email ya existía (manejado arriba) o por algún otro fallo interno del servicio.
-        this.errorMessage = 'Hubo un error al intentar registrar el usuario. Por favor, inténtalo de nuevo.';
-      }
+    if (this.authService.getUserByEmail(this.newUser.email)) {
+      this.errorMessage = 'Este correo electrónico ya está registrado. Por favor, utiliza otro.';
+      return;
+    }
+
+    const userToRegister: User = {
+      fullName: this.newUser.fullName,
+      email: this.newUser.email,
+      password: this.newUser.password,
+      role: 'client',
+      address: this.newUser.address,
+      phone: this.newUser.phone
+    };
+
+    if (this.authService.register(userToRegister)) {
+      this.successMessage = '¡Registro exitoso! Ahora puedes iniciar sesión.';
+      this.registerForm.resetForm();
+      this.confirmPassword = '';
+      setTimeout(() => {
+        this.router.navigate(['/login']);
+      }, 2000);
     } else {
-      this.errorMessage = 'Por favor, completa todos los campos requeridos y asegúrate de que sean válidos.';
+      this.errorMessage = 'Hubo un error al intentar registrar el usuario. Por favor, inténtalo de nuevo.';
     }
   }
 }
