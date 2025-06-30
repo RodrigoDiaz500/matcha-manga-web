@@ -27,7 +27,7 @@ import { CartModalComponent } from './components/cart-modal/cart-modal.component
 export class AppComponent implements OnInit {
   title = 'matcha-manga-web';
   hideNavbar: boolean = false;
-  private hideNavbarRoutes: string[] = ['/login', '/register', '/forgot-password', '/reset-password'];
+  private hideNavbarRoutes: string[] = ['/login', '/register', '/forgot-password', '/reset-password', '/simulated-payment'];
 
   constructor(private router: Router) {}
 
