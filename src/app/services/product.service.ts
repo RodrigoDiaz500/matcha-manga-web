@@ -1,8 +1,10 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core'; 
-import { isPlatformBrowser } from '@angular/common'; 
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http'; // Importa HttpClient
 
-
+// Define la interfaz de tus productos
 export interface Product {
   id: number;
   title: string;
@@ -22,104 +24,128 @@ export class ProductService {
   private productsSubject: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
   public products$: Observable<Product[]> = this.productsSubject.asObservable();
 
+  // URL a tu archivo JSON local
+  private productsJsonUrl = 'assets/products.json';
+
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object 
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private http: HttpClient // Inyecta HttpClient en el constructor
   ) {
-    if (isPlatformBrowser(this.platformId)) { 
-      this.loadProductsFromLocalStorage();
-    } else {
-      this.initializeDefaultProducts();
-    }
+    // Al iniciar el servicio, carga los productos desde el archivo JSON.
+    this.loadProductsFromJson();
   }
 
-  private initializeDefaultProducts(): void {
-  this.products = [
-    { id: 1, title: 'Fullmetal Alchemist - Tomo 1', author: 'Hiromu Arakawa', price: 9.990, image: 'manga1.jpg', type: 'manga' }, 
-    { id: 2, title: 'Shingeki no Kyojin - Tomo 1', author: 'Hajime Isayama', price: 11.990, image: 'manga2.jpg', type: 'manga' }, 
-    { id: 3, title: 'JoJos Bizarre Adventure: Stardust Crusaders - Tomo 2', author: 'Hirohiko Araki', price: 16.990, type: 'manga', image: 'manga3.jpg' }, 
-    { id: 4, title: 'Dragon Ball - Tomo 1', author: 'Akira Toriyama', price: 9.990, image: 'manga4.jpg', type: 'manga' }, 
-    { id: 5, title: 'One Piece - Tomo 2', author: 'Eiichirō Oda', price: 9.990, image: 'manga5.jpg', type: 'manga' }, 
-    { id: 6, title: 'Akatsuki no Yona - Tomo 12', author: 'Mizuho Kusanagi', price: 11.990, image: 'manga6.jpg', type: 'manga' }, 
-    { id: 7, title: 'Pokémon Rojo - Tomo 1', author: 'Hidenori Kusaka', price: 18.990, image: 'manga7.jpg', type: 'manga' }, 
-    { id: 8, title: 'Cardcaptor Sakura - Tomo 1', author: 'CLAMP', price: 15.990, image: 'manga8.jpg', type: 'manga' }, 
-    { id: 9, title: 'Fairy Tail - Tomo 34', author: 'Hiro Mashima', price: 9.990, image: 'manga9.jpg', type: 'manga' },
-    { id: 10, title: 'Dungeon Meshi - Tomo 2', author: 'Ryōko Kui', price: 15.990, image: 'manga10.jpg', type: 'manga' }, 
-    { id: 11, title: 'Inuyasha - Tomo 18', author: 'Rumiko Takahashi', price: 15.990, image: 'manga11.jpg', type: 'manga' }, 
-    { id: 12, title: 'Sword art online Phantom Bullet - Tomo 1', author: 'Reki Kawahara', price: 9.990, image: 'manga12.jpg', type: 'manga' }, 
-    { id: 13, title: 'Batman N#50 ', author: 'Scott Snyder,Marcio Takara,', price: 9.990, image: 'comic1.jpg', type: 'comic' }, 
-    { id: 14, title: 'Watchmen', author: 'Alan Moore ', price: 24.990, image: 'comic2.jpg', type: 'comic' }, 
-    { id: 15, title: 'The Amazing Spider-Man N#70', author: 'Joe Kelly', price: 55.000, image: 'comic3.jpg', type: 'comic' }, 
-    { id: 16, title: 'batman who laughs', author: 'Scott Snyder', price: 27.990, image: 'comic4.jpg', type: 'comic' }, 
-    { id: 17, title: 'Los Vengadores N#1', author: 'Stan Lee', price: 49.990, image: 'comic5.jpg', type: 'comic' }, 
-    { id: 18, title: 'Spawn N#300', author: 'Scott Snyder', price: 23.990, image: 'comic6.jpg', type: 'comic' }, 
-    { id: 19, title: 'Star Wars N#13', author: 'Greg Pak', price: 9.990, image: 'comic7.jpg', type: 'comic' }, 
-    { id: 20, title: 'Venom: Lethal Protector N#11', author: 'David Michelinie', price: 20.990, image: 'comic8.jpg', type: 'comic' }, 
-    { id: 21, title: 'X-Men (2024) N#1', author: 'Jed Mackay', price: 9.990, image: 'comic9.jpg', type: 'comic' }, 
-    { id: 22, title: 'Iron Man N#26/145', author: 'Christopher Cantwell, Murewa Ayodele', price: 7.990, image: 'comic10.jpg', type: 'comic' },
-    { id: 23, title: 'Invencible Vol.27', author: 'Robert Kirkman', price: 25.650, image: 'comic11.jpg', type: 'comic' }, 
-    { id: 24, title: 'Warhammer 40k Ahriman Vol. 1: Exilio', author: 'John French', price: 20.900, image: 'comic12.jpg', type: 'comic' }, 
-  ];
-  this.productsSubject.next(this.products);
-}
-
-  private loadProductsFromLocalStorage(): void {
-    const storedComics = localStorage.getItem('comicsData');
-    if (storedComics) {
-      this.products = JSON.parse(storedComics);
-    } else {
-      this.initializeDefaultProducts();
-    }
-    this.productsSubject.next(this.products); 
+  /**
+   * Carga los productos desde el archivo JSON estático.
+   * Reemplaza la lógica de carga desde localStorage y la inicialización por defecto.
+   */
+  private loadProductsFromJson(): void {
+    this.http.get<Product[]>(this.productsJsonUrl)
+      .pipe(
+        tap(data => {
+          // console.log('Productos cargados desde JSON:', data); // Puedes descomentar para depurar
+          this.products = data; // Asigna los datos cargados al arreglo de productos del servicio
+          this.productsSubject.next(this.products); // Emite los productos a los suscriptores
+        }),
+        catchError(error => {
+          console.error('Error al cargar productos desde JSON:', error);
+          // Si hay un error al cargar el JSON (ej. archivo no encontrado, ruta incorrecta),
+          // inicializa con un arreglo vacío o con datos de respaldo para evitar que la app falle.
+          this.products = [];
+          this.productsSubject.next(this.products);
+          // Relanza el error para que los componentes puedan manejarlo si es necesario.
+          return throwError(() => new Error('No se pudieron cargar los productos desde el JSON. Por favor, verifica la ruta y el archivo.'));
+        })
+      )
+      .subscribe(); // Es crucial suscribirse para que la petición HTTP se ejecute
   }
 
-  private saveProductsToLocalStorage(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem('comicsData', JSON.stringify(this.products));
-    }
-  }
+  // --- Métodos CRUD (ahora operan en la copia de los datos en memoria) ---
 
-  getProducts(): Observable<Product[]> {
+  /**
+   * Retorna un Observable con todos los productos cargados.
+   * @returns Observable<Product[]>
+   */
+  getAllProducts(): Observable<Product[]> {
+    // Como los productos ya están cargados en `this.products`, simplemente los retornamos.
     return of(this.products);
   }
 
+  /**
+   * Retorna un Observable con productos filtrados por tipo (manga o comic).
+   * @param type - El tipo de producto a filtrar.
+   * @returns Observable<Product[]>
+   */
   getProductsByType(type: 'manga' | 'comic'): Observable<Product[]> {
     const filteredProducts = this.products.filter(p => p.type === type);
     return of(filteredProducts);
   }
 
+  /**
+   * Retorna un Observable con un producto específico por su ID.
+   * @param id - El ID del producto a buscar.
+   * @returns Observable<Product | undefined>
+   */
   getProductById(id: number): Observable<Product | undefined> {
     const product = this.products.find(p => p.id === id);
     return of(product);
   }
 
+  /**
+   * Añade un nuevo producto.
+   * IMPORTANTE: Los cambios NO se persistirán en el archivo JSON estático.
+   * Solo afectarán la lista de productos en memoria del navegador.
+   * Para persistencia real, se necesita una API backend.
+   * @param product - El producto a añadir.
+   * @returns Observable<Product> - El producto añadido con un ID generado.
+   */
   addProduct(product: Product): Observable<Product> {
+    // Genera un nuevo ID simple (esto sería manejado por el backend en una API real)
     const newId = this.products.length > 0 ? Math.max(...this.products.map(p => p.id)) + 1 : 1;
     const newProduct = { ...product, id: newId };
     this.products.push(newProduct);
-    this.saveProductsToLocalStorage(); 
-    this.productsSubject.next(this.products); 
+    this.productsSubject.next(this.products); // Emite la lista actualizada
     return of(newProduct);
   }
 
+  /**
+   * Actualiza un producto existente.
+   * IMPORTANTE: Los cambios NO se persistirán en el archivo JSON estático.
+   * Solo afectarán la lista de productos en memoria del navegador.
+   * @param updatedProduct - El producto con los datos actualizados.
+   * @returns Observable<boolean> - True si la actualización fue exitosa, false en caso contrario.
+   */
   updateProduct(updatedProduct: Product): Observable<boolean> {
     const index = this.products.findIndex(p => p.id === updatedProduct.id);
     if (index > -1) {
       this.products[index] = updatedProduct;
-      this.saveProductsToLocalStorage(); 
-      this.productsSubject.next(this.products); 
+      this.productsSubject.next(this.products); // Emite la lista actualizada
       return of(true);
     }
     return of(false);
   }
 
+  /**
+   * Elimina un producto por su ID.
+   * IMPORTANTE: Los cambios NO se persistirán en el archivo JSON estático.
+   * Solo afectarán la lista de productos en memoria del navegador.
+   * @param id - El ID del producto a eliminar.
+   * @returns Observable<boolean> - True si la eliminación fue exitosa, false en caso contrario.
+   */
   deleteProduct(id: number): Observable<boolean> {
     const initialLength = this.products.length;
     this.products = this.products.filter(p => p.id !== id);
-    this.saveProductsToLocalStorage(); 
     if (this.products.length < initialLength) {
-      this.productsSubject.next(this.products); 
+      this.productsSubject.next(this.products); // Emite la lista actualizada
       return of(true);
     }
     return of(false);
   }
+
+  // Los siguientes métodos ya no son necesarios o se reemplazan por loadProductsFromJson()
+  // y la manipulación en memoria. Puedes eliminarlos o dejarlos comentados para referencia.
+
+  // private loadProductsFromLocalStorage(): void { ... }
+  // private saveProductsToLocalStorage(): void { ... }
+  // private initializeDefaultProducts(): void { ... }
 }
