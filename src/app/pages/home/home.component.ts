@@ -4,7 +4,7 @@ import { Product, ProductService } from '../../services/product.service';
 import { Subscription, combineLatest } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 import { CartService } from '../../services/cart.service';
-import { ActivatedRoute, Params } from '@angular/router'; 
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -19,41 +19,44 @@ export class HomeComponent implements OnInit, OnDestroy {
   latestProducts: Product[] = [];
   featuredProducts: Product[] = [];
 
-  private originalAllProducts: Product[] = [];
+  private originalAllProducts: Product[] = []; 
   private combinedSubscription!: Subscription;
 
   constructor(
     private productService: ProductService,
     private cartService: CartService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute 
   ) { }
 
   ngOnInit(): void {
+    
     this.combinedSubscription = combineLatest([
-      this.productService.products$.pipe(startWith([])),
+      this.productService.products$.pipe(startWith([])), 
       this.route.queryParams.pipe(startWith({} as Params)) 
     ]).subscribe(([products, params]) => {
-      this.originalAllProducts = products;
-
+      this.originalAllProducts = products; 
 
       const searchTerm = (params['q'] as string) || ''; 
 
       let filteredProducts: Product[] = [];
-
       if (searchTerm) {
         const lowerCaseSearchTerm = searchTerm.toLowerCase();
+        
         filteredProducts = this.originalAllProducts.filter(product =>
           product.title.toLowerCase().includes(lowerCaseSearchTerm) ||
           product.author.toLowerCase().includes(lowerCaseSearchTerm) ||
           (product.description && product.description.toLowerCase().includes(lowerCaseSearchTerm))
         );
       } else {
+        
         filteredProducts = [...this.originalAllProducts];
       }
 
+      
       this.mangas = filteredProducts.filter(p => p.type === 'manga');
       this.comics = filteredProducts.filter(p => p.type === 'comic');
 
+      
       this.latestProducts = filteredProducts.sort((a, b) => b.id! - a.id!).slice(0, 5);
       this.featuredProducts = filteredProducts.filter(p => p.id! % 2 === 0).slice(0, 5);
     });
@@ -61,7 +64,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.combinedSubscription) {
-      this.combinedSubscription.unsubscribe();
+      this.combinedSubscription.unsubscribe(); 
     }
   }
 
@@ -75,7 +78,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.cartService.addToCart(product);
         console.log(`Producto ${product.title} añadido al carrito.`);
       } else {
-        console.warn(`Producto con ID ${productId} no encontrado.`);
+        console.warn(`No se encontró el producto con ID: ${productId}`);
       }
     });
   }

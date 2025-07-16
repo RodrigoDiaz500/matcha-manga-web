@@ -2,7 +2,7 @@ import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http'; 
+import { HttpClient } from '@angular/common/http';
 
 
 export interface Product {
@@ -24,12 +24,12 @@ export class ProductService {
   private productsSubject: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
   public products$: Observable<Product[]> = this.productsSubject.asObservable();
 
-  // URL a  JSON local
+  
   private productsJsonUrl = 'assets/products.json';
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private http: HttpClient 
+    private http: HttpClient
   ) {
     this.loadProductsFromJson();
   }
@@ -37,22 +37,23 @@ export class ProductService {
   private loadProductsFromJson(): void {
     this.http.get<Product[]>(this.productsJsonUrl)
       .pipe(
-        tap(data => {         
+        tap(data => {
           this.products = data; 
           this.productsSubject.next(this.products); 
         }),
         catchError(error => {
-          console.error('Error al cargar productos desde JSON:', error);
+          console.error('Error al cargar products.json:', error);
+          
           this.products = [];
           this.productsSubject.next(this.products);
-          return throwError(() => new Error('No se pudieron cargar los productos desde el JSON. Por favor, verifica la ruta y el archivo.'));
+          return throwError(() => new Error('No se pudo cargar products.json. Por favor, verifica la ruta y el archivo.'));
         })
       )
       .subscribe(); 
   }
 
   getAllProducts(): Observable<Product[]> {
-    return of(this.products);
+    return of(this.products); 
   }
 
   getProductsByType(type: 'manga' | 'comic'): Observable<Product[]> {
@@ -66,7 +67,7 @@ export class ProductService {
   }
 
   addProduct(product: Product): Observable<Product> {
-    const newId = this.products.length > 0 ? Math.max(...this.products.map(p => p.id)) + 1 : 1;
+    const newId = this.products.length > 0 ? Math.max(...this.products.map(p => p.id!)) + 1 : 1;
     const newProduct = { ...product, id: newId };
     this.products.push(newProduct);
     this.productsSubject.next(this.products); 
@@ -92,5 +93,4 @@ export class ProductService {
     }
     return of(false);
   }
-
 }
