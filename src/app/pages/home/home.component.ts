@@ -44,8 +44,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         
         filteredProducts = this.originalAllProducts.filter(product =>
           product.title.toLowerCase().includes(lowerCaseSearchTerm) ||
-          product.author.toLowerCase().includes(lowerCaseSearchTerm) ||
-          (product.description && product.description.toLowerCase().includes(lowerCaseSearchTerm))
+          product.author.toLowerCase().includes(lowerCaseSearchTerm) 
         );
       } else {
         

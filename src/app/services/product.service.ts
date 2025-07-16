@@ -12,8 +12,6 @@ export interface Product {
   price: number;
   image: string;
   type: 'manga' | 'comic';
-  stock?: number;
-  description?: string;
 }
 
 @Injectable({
